@@ -54,19 +54,20 @@ jobs:
 
       - name: Auto-Bump Version if Conflict & Publish
         run: |
-          echo "@flash-ship:registry=https://npm.pkg.github.com" > .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+          TOKEN="${NODE_AUTH_TOKEN}"
+          echo "@flash-ship:registry=https://npm.pkg.github.com" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${TOKEN}" >> ~/.npmrc
 
           for pkg in packages/*; do
             if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
               PKG_NAME=$(node -p "require('./$pkg/package.json').name")
               CURRENT_VER=$(node -p "require('./$pkg/package.json').version")
               
-              echo "Checking if $PKG_NAME@$CURRENT_VER exists on GitHub Packages..."
-              EXISTS=$(npm view "${PKG_NAME}@${CURRENT_VER}" version 2>/dev/null || echo "")
+              echo "==> Processing $PKG_NAME (Current version: $CURRENT_VER)..."
+              EXISTS=$(npm view "${PKG_NAME}@${CURRENT_VER}" version --registry=https://npm.pkg.github.com 2>/dev/null || echo "")
               
               if [ -n "$EXISTS" ]; then
-                echo "Version $CURRENT_VER for $PKG_NAME already exists. Auto-bumping patch version..."
+                echo "Version $CURRENT_VER for $PKG_NAME already exists on GitHub Packages. Auto-bumping patch version..."
                 node -e "
                   const fs = require('fs');
                   const pkgPath = './$pkg/package.json';
@@ -79,8 +80,8 @@ jobs:
               fi
               
               NEW_VER=$(node -p "require('./$pkg/package.json').version")
-              echo "==> Publishing $PKG_NAME@$NEW_VER to GitHub Packages..."
-              yarn workspace "$PKG_NAME" npm publish --access public || echo "Publishing $PKG_NAME failed, continuing..."
+              echo "==> Publishing $PKG_NAME@$NEW_VER directly via npm publish..."
+              (cd "$pkg" && npm publish --registry=https://npm.pkg.github.com) || echo "Publishing $PKG_NAME failed, continuing..."
             fi
           done
         env:
