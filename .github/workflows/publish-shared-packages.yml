@@ -63,7 +63,7 @@ jobs:
                 "
               fi
               echo "==> Publishing $PKG_NAME via Yarn Berry..."
-              yarn workspace "$PKG_NAME" npm publish --access restricted
+              yarn workspace "$PKG_NAME" npm publish --access public
             fi
           done
         env:
