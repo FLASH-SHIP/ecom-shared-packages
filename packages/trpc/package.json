@@ -1,7 +1,6 @@
 {
   "name": "@flash-ship/ecom-trpc",
   "version": "1.0.0",
-  "private": true,
   "main": "./server/index.ts",
   "types": "./server/index.ts",
   "exports": {
@@ -49,5 +48,9 @@
     "date-fns": "^4.4.0",
     "next": "16.2.6",
     "typescript": "^5.8.0"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
   }
 }

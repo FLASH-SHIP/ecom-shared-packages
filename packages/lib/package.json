@@ -1,7 +1,6 @@
 {
   "name": "@flash-ship/ecom-lib",
   "version": "0.0.0",
-  "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -40,5 +39,9 @@
     "@types/jsonwebtoken": "^9.0.0",
     "typescript": "^5.8.0",
     "vitest": "^3.2.0"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
   }
 }
