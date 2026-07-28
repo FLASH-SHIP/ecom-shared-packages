@@ -42,6 +42,7 @@ jobs:
           cp -r .ecom-api-temp/packages/features/* packages/features/ || true
           cp -r .ecom-api-temp/packages/prisma/* packages/prisma/ || true
           yarn prisma generate --schema packages/prisma/schema
+          rm -f packages/features/package.json packages/prisma/package.json
           rm -rf .ecom-api-temp
 
       - name: Type-check Shared Packages
