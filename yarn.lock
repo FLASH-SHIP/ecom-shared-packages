@@ -477,6 +477,7 @@ __metadata:
   resolution: "@flash-ship/ecom-config@workspace:packages/config"
   dependencies:
     "@flash-ship/ecom-tsconfig": "workspace:*"
+    "@types/node": "npm:^22.0.0"
     typescript: "npm:^5.8.0"
   languageName: unknown
   linkType: soft
@@ -486,6 +487,7 @@ __metadata:
   resolution: "@flash-ship/ecom-emails@workspace:packages/emails"
   dependencies:
     "@flash-ship/ecom-tsconfig": "workspace:*"
+    "@types/node": "npm:^22.0.0"
     "@types/nodemailer": "npm:^8.0.0"
     nodemailer: "npm:^8.0.10"
     typescript: "npm:^5.8.0"
@@ -498,6 +500,7 @@ __metadata:
   resolution: "@flash-ship/ecom-i18n@workspace:packages/i18n"
   dependencies:
     "@flash-ship/ecom-tsconfig": "workspace:*"
+    "@types/node": "npm:^22.0.0"
     next-intl: "npm:^4.1.0"
     typescript: "npm:^5.8.0"
   languageName: unknown
@@ -510,6 +513,7 @@ __metadata:
     "@flash-ship/ecom-tsconfig": "workspace:*"
     "@types/bcryptjs": "npm:^2.4.0"
     "@types/jsonwebtoken": "npm:^9.0.0"
+    "@types/node": "npm:^22.0.0"
     bcryptjs: "npm:^3.0.0"
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.1"
@@ -525,6 +529,7 @@ __metadata:
   resolution: "@flash-ship/ecom-trpc@workspace:packages/trpc"
   dependencies:
     "@trpc/server": "npm:^11.1.0"
+    "@types/node": "npm:^22.0.0"
     date-fns: "npm:^4.4.0"
     exceljs: "npm:^4.4.0"
     next: "npm:16.2.6"
@@ -537,6 +542,8 @@ __metadata:
 "@flash-ship/ecom-tsconfig@workspace:*, @flash-ship/ecom-tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@flash-ship/ecom-tsconfig@workspace:packages/tsconfig"
+  dependencies:
+    "@types/node": "npm:^22.0.0"
   languageName: unknown
   linkType: soft
 
@@ -545,6 +552,7 @@ __metadata:
   resolution: "@flash-ship/ecom-types@workspace:packages/types"
   dependencies:
     "@flash-ship/ecom-tsconfig": "workspace:*"
+    "@types/node": "npm:^22.0.0"
     typescript: "npm:^5.8.0"
   languageName: unknown
   linkType: soft

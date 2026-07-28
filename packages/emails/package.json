@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@flash-ship/ecom-tsconfig": "workspace:*",
+    "@types/node": "^22.0.0",
     "@types/nodemailer": "^8.0.0",
     "typescript": "^5.8.0",
     "vitest": "^3.2.0"

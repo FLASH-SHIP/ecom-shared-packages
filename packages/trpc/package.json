@@ -45,6 +45,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "date-fns": "^4.4.0",
     "next": "16.2.6",
     "typescript": "^5.8.0"
