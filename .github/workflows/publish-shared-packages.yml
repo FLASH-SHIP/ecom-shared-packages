@@ -24,7 +24,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@flash-ship'
           cache: 'yarn'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Turbo Build Cache
         uses: actions/cache@v4
@@ -36,6 +40,11 @@ jobs:
 
       - name: Install Dependencies
         run: yarn install
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Type-check Shared Packages
         run: yarn type-check
@@ -62,11 +71,12 @@ jobs:
                   fs.writeFileSync(pkgPath, JSON.stringify(data, null, 2) + '\n');
                 "
               fi
-              echo "==> Publishing $PKG_NAME via Yarn Berry..."
+              echo "==> Publishing $PKG_NAME to GitHub Packages via Yarn Berry..."
               yarn workspace "$PKG_NAME" npm publish --access public
             fi
           done
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN || secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
