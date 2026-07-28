@@ -3,8 +3,8 @@ import {
   mapToAdminOrderDetailResponse,
   mapToAdminOrderSummaryResponse,
 } from "@ecom/features/order/mappers/AdminOrderMapper";
-import { Permissions } from "@ecom/lib/permissions";
-import { RedisCache } from "@ecom/lib/redis";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { RedisCache } from "@flash-ship/ecom-lib/redis";
 import type {
   Customer,
   Order,
@@ -14,7 +14,7 @@ import type {
   OrderTrackingCheckpoint,
 } from "@ecom/prisma";
 import { OrderStatus, type Prisma } from "@ecom/prisma";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

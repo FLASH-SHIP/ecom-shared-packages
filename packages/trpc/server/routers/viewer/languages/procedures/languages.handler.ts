@@ -1,8 +1,8 @@
 import { getLanguageService } from "@ecom/features/di/containers/LanguageService";
 import { WORLD_LANGUAGES } from "@ecom/features/language/constants/worldLanguages";
-import { Permissions } from "@ecom/lib/permissions";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { authedProcedure, publicProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { authedProcedure, publicProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 const languageCreateSchema = z.object({

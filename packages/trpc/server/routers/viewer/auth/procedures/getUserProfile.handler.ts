@@ -1,6 +1,6 @@
 import { getAuthService } from "@ecom/features/di/containers/AuthService";
-import { Permissions } from "@ecom/lib/permissions";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

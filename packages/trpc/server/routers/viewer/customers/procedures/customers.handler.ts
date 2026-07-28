@@ -1,10 +1,10 @@
 import { USERNAME_REGEX, USERNAME_VALIDATION_MESSAGE } from "@ecom/features/customer/constants";
 import { getAuditService } from "@ecom/features/di/containers/AuditService";
 import { getCustomerService } from "@ecom/features/di/containers/CustomerService";
-import { hashPassword } from "@ecom/lib/crypto";
-import { Permissions } from "@ecom/lib/permissions";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { hashPassword } from "@flash-ship/ecom-lib/crypto";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 const customerStatusEnum = z.enum(["ACTIVE", "INACTIVE", "BANNED"]);

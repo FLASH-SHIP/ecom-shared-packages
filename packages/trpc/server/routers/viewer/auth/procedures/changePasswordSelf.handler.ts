@@ -1,8 +1,8 @@
 import { getAuthService } from "@ecom/features/di/containers/AuthService";
-import { Permissions } from "@ecom/lib/permissions";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { rateLimiters } from "@ecom/trpc-contract/server/middleware/rateLimit";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { rateLimiters } from "@flash-ship/ecom-trpc/server/middleware/rateLimit";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

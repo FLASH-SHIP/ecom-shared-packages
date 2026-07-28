@@ -1,4 +1,4 @@
-import { middleware } from "@ecom/trpc-contract/server/init";
+import { middleware } from "@flash-ship/ecom-trpc/server/init";
 import { TRPCError } from "@trpc/server";
 
 /**

@@ -1,5 +1,5 @@
 import { getAuthService } from "@ecom/features/di/containers/AuthService";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 
 export const me = authedProcedure.query(async ({ ctx }) => {
   const authService = getAuthService();

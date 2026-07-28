@@ -1,5 +1,5 @@
 {
-  "name": "@ecom/tsconfig",
+  "name": "@flash-ship/ecom-tsconfig",
   "version": "0.0.0",
   "private": true,
   "files": [

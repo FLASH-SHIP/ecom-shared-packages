@@ -1,6 +1,6 @@
 import { getRevisionService } from "@ecom/features/di/containers/RevisionService";
-import { Permissions } from "@ecom/lib/permissions";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 const referenceTypeEnum = z.enum(["post", "page"]);

@@ -1,12 +1,12 @@
 {
-  "extends": "@ecom/tsconfig/library.json",
+  "extends": "@flash-ship/ecom-tsconfig/library.json",
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "..",
     "declaration": true,
     "emitDeclarationOnly": true,
     "paths": {
-      "@ecom/trpc-contract/*": ["./*"],
+      "@flash-ship/ecom-trpc/*": ["./*"],
       "@ecom/trpc/*": ["./*"],
       "@ecom/features/*": ["../features/*"]
     }

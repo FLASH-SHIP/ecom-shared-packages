@@ -1,5 +1,5 @@
 {
-  "name": "@ecom/i18n",
+  "name": "@flash-ship/ecom-i18n",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -16,7 +16,7 @@
     "next-intl": "^4.1.0"
   },
   "devDependencies": {
-    "@ecom/tsconfig": "workspace:*",
+    "@flash-ship/ecom-tsconfig": "workspace:*",
     "typescript": "^5.8.0"
   }
 }

@@ -1,6 +1,6 @@
 import { PostPolicy } from "@ecom/features/blog/policies/PostPolicy";
 import { getPostService } from "@ecom/features/di/containers/BlogService";
-import { middleware } from "@ecom/trpc-contract/server/init";
+import { middleware } from "@flash-ship/ecom-trpc/server/init";
 import { TRPCError } from "@trpc/server";
 
 /**

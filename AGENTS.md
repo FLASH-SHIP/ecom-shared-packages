@@ -5,7 +5,7 @@ You are a senior Ecom engineer working in the dedicated shared packages reposito
 ## Do
 
 - Keep shared packages pure — **zero app-specific business logic** or database queries inside shared packages.
-- Export all packages using clean subpath entries (e.g., `@ecom/ui`, `@ecom/ui/domain`, `@ecom/trpc-contract/customer`).
+- Export all packages using clean subpath entries (e.g., `@flash-ship/ecom-ui`, `@flash-ship/ecom-ui/domain`, `@flash-ship/ecom-trpc/customer`).
 - Use `import type { X }` for TypeScript type imports.
 - Use early returns to reduce nesting: `if (!data) return null;`.
 - Add translations to `packages/i18n/locales/en/*.json` and `packages/i18n/locales/vi/*.json` for all shared strings.

@@ -1,4 +1,4 @@
-import { loggerContext } from "@ecom/lib/logger";
+import { loggerContext } from "@flash-ship/ecom-lib/logger";
 import { handleTRPCError } from "./middleware/errorHandler";
 import { requestLogger } from "./middleware/requestLogger";
 import { TRPCError } from "@trpc/server";

@@ -11,7 +11,7 @@ vi.mock("nodemailer", () => ({
 
 describe("EmailService", () => {
   it("should build password reset email", async () => {
-    const { buildPasswordResetEmail } = await import("@ecom/emails");
+    const { buildPasswordResetEmail } = await import("@flash-ship/ecom-emails");
     const email = buildPasswordResetEmail({
       name: "John",
       resetUrl: "https://example.com/reset/abc123",
@@ -23,7 +23,7 @@ describe("EmailService", () => {
   });
 
   it("should build welcome email", async () => {
-    const { buildWelcomeEmail } = await import("@ecom/emails");
+    const { buildWelcomeEmail } = await import("@flash-ship/ecom-emails");
     const email = buildWelcomeEmail({
       name: "Alice",
       loginUrl: "https://example.com/login",
@@ -33,7 +33,7 @@ describe("EmailService", () => {
   });
 
   it("should build contact reply email", async () => {
-    const { buildContactReplyEmail } = await import("@ecom/emails");
+    const { buildContactReplyEmail } = await import("@flash-ship/ecom-emails");
     const email = buildContactReplyEmail({
       contactName: "Bob",
       originalMessage: "Hello, I need help",
@@ -46,7 +46,7 @@ describe("EmailService", () => {
   });
 
   it("should build comment notification email", async () => {
-    const { buildCommentNotificationEmail } = await import("@ecom/emails");
+    const { buildCommentNotificationEmail } = await import("@flash-ship/ecom-emails");
     const email = buildCommentNotificationEmail({
       postTitle: "My Post",
       commentAuthor: "Charlie",
@@ -59,7 +59,7 @@ describe("EmailService", () => {
   });
 
   it("should build member welcome email", async () => {
-    const { buildMemberWelcomeEmail } = await import("@ecom/emails");
+    const { buildMemberWelcomeEmail } = await import("@flash-ship/ecom-emails");
     const email = buildMemberWelcomeEmail({
       memberName: "Dave",
       loginUrl: "https://example.com/login",
@@ -70,7 +70,7 @@ describe("EmailService", () => {
 
   it("should send email via SMTP transport", async () => {
     process.env.EMAIL_PROVIDER_PRIMARY = "smtp";
-    const { sendEmail } = await import("@ecom/emails");
+    const { sendEmail } = await import("@flash-ship/ecom-emails");
     const result = await sendEmail({
       to: "user@example.com",
       subject: "Test",
@@ -87,7 +87,7 @@ describe("EmailService", () => {
       text: async () => "ok",
     } as unknown as Response);
 
-    const { sendEmail } = await import("@ecom/emails");
+    const { sendEmail } = await import("@flash-ship/ecom-emails");
     const result = await sendEmail({
       to: "resend@example.com",
       subject: "Resend Test",
@@ -119,7 +119,7 @@ describe("EmailService", () => {
       text: async () => "Internal Error",
     } as unknown as Response);
 
-    const { sendEmail } = await import("@ecom/emails");
+    const { sendEmail } = await import("@flash-ship/ecom-emails");
     const result = await sendEmail({
       to: "failover@example.com",
       subject: "Failover Test",

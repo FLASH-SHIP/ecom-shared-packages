@@ -1,5 +1,5 @@
 {
-  "name": "@ecom/ui",
+  "name": "@flash-ship/ecom-ui",
   "version": "1.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -49,7 +49,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@ecom/tsconfig": "workspace:*",
+    "@flash-ship/ecom-tsconfig": "workspace:*",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

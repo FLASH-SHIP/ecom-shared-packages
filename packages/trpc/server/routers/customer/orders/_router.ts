@@ -1,4 +1,4 @@
-import { router } from "@ecom/trpc-contract/server/trpc";
+import { router } from "@flash-ship/ecom-trpc/server/trpc";
 import {
   completeImportSession,
   createImportSession,

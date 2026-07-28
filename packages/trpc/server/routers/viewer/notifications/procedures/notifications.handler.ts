@@ -5,8 +5,8 @@ import {
   getNotificationTemplateService,
   getScheduledNotificationService,
 } from "@ecom/features/di/containers/NotificationService";
-import { Permissions } from "@ecom/lib/permissions";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -146,7 +146,7 @@ export const updateTemplate = authedProcedure
     const updated = await svc.updateTemplate(id, data);
     if (updated?.type) {
       try {
-        const { RedisCache } = await import("@ecom/lib/redis");
+        const { RedisCache } = await import("@flash-ship/ecom-lib/redis");
         const cache = new RedisCache("notification-templates");
         await cache.invalidate(updated.type);
       } catch {

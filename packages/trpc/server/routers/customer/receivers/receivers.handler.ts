@@ -5,8 +5,8 @@ import {
   validateReceiverName,
   validateReceiverPhone,
   validateReceiverState,
-} from "@ecom/lib";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+} from "@flash-ship/ecom-lib";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 export const listReceivers = authedProcedure.query(async ({ ctx }) => {

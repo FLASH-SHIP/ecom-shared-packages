@@ -2,7 +2,7 @@ import {
   getRateCardRepository,
   getRateCardService,
 } from "@ecom/features/di/containers/ShippingRateService";
-import { Permissions } from "@ecom/lib/permissions";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
 import {
   ContentStatus,
   Prisma,
@@ -14,9 +14,9 @@ import {
 
 const { Decimal } = Prisma;
 
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { rateLimiters } from "@ecom/trpc-contract/server/middleware/rateLimit";
-import { authedProcedure, publicProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { rateLimiters } from "@flash-ship/ecom-trpc/server/middleware/rateLimit";
+import { authedProcedure, publicProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

@@ -1,12 +1,12 @@
 import { getUserManagementService } from "@ecom/features/di/containers/RbacService";
 import { UserTransformer } from "@ecom/features/rbac/transformers/UserTransformer";
-import { Permissions } from "@ecom/lib/permissions";
-import { RedisCache } from "@ecom/lib/redis";
-import { invalidateCachedSession } from "@ecom/lib/session-cache";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { RedisCache } from "@flash-ship/ecom-lib/redis";
+import { invalidateCachedSession } from "@flash-ship/ecom-lib/session-cache";
 import { prisma, UserStatus } from "@ecom/prisma";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { rateLimiters } from "@ecom/trpc-contract/server/middleware/rateLimit";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { rateLimiters } from "@flash-ship/ecom-trpc/server/middleware/rateLimit";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

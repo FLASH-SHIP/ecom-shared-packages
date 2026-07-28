@@ -3,7 +3,7 @@ import {
   getNotificationService,
   getNotificationSettingService,
 } from "@ecom/features/di/containers/NotificationService";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 export const listNotifications = authedProcedure

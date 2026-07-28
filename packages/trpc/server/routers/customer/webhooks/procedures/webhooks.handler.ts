@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { getWebhookService } from "@ecom/features/di/containers/WebhookService";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

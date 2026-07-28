@@ -1,5 +1,5 @@
 import { getCustomerPackageService } from "@ecom/features/di/containers/CustomerPackageService";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 export const listPackages = authedProcedure.query(async ({ ctx }) => {

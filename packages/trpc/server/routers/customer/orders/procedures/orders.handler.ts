@@ -6,8 +6,8 @@ import {
   validateReceiverName,
   validateReceiverPhone,
   validateReceiverState,
-} from "@ecom/lib";
-import { RedisCache } from "@ecom/lib/redis";
+} from "@flash-ship/ecom-lib";
+import { RedisCache } from "@flash-ship/ecom-lib/redis";
 import type {
   Customer,
   Order,
@@ -22,7 +22,7 @@ import {
   ShippingMethod,
   ShippingOrigin,
 } from "@ecom/prisma";
-import { authedProcedure } from "@ecom/trpc-contract/server/trpc";
+import { authedProcedure } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

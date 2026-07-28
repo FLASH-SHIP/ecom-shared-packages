@@ -1,8 +1,8 @@
 import { TaxonomyRepository } from "@ecom/features/taxonomy/repositories/TaxonomyRepository";
 import { TaxonomyService } from "@ecom/features/taxonomy/services/TaxonomyService";
-import { Permissions } from "@ecom/lib/permissions";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 const getTaxonomyService = () => new TaxonomyService({ taxonomyRepo: new TaxonomyRepository() });

@@ -1,4 +1,4 @@
-import { getRedisClient } from "@ecom/lib/redis";
+import { getRedisClient } from "@flash-ship/ecom-lib/redis";
 
 /**
  * Shared session cache utilities for Redis-backed NextAuth sessions.

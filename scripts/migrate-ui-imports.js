@@ -18,17 +18,17 @@ function processFile(filePath) {
   let content = fs.readFileSync(filePath, "utf8");
   let original = content;
 
-  // 1. LanguageSwitcher & PhoneInput -> @ecom/ui/domain
+  // 1. LanguageSwitcher & PhoneInput -> @flash-ship/ecom-ui/domain
   content = content.replace(
     /from\s+["']@(?:web|customer|admin)?(?:\/src)?\/components\/ui\/language-switcher["']/g,
-    'from "@ecom/ui/domain"'
+    'from "@flash-ship/ecom-ui/domain"'
   );
   content = content.replace(
     /from\s+["']@(?:web|customer|admin)?(?:\/src)?\/components\/ui\/PhoneInput["']/g,
-    'from "@ecom/ui/domain"'
+    'from "@flash-ship/ecom-ui/domain"'
   );
 
-  // 2. Specific component subpath imports -> @ecom/ui
+  // 2. Specific component subpath imports -> @flash-ship/ecom-ui
   // e.g. from "@/components/ui/button" or "@customer/components/ui/dialog"
   content = content.replace(
     /from\s+["']@(?:web|customer|admin)?(?:\/src)?\/components\/ui\/([a-zA-Z0-9_-]+)["']/g,
@@ -36,14 +36,14 @@ function processFile(filePath) {
       if (KEEP_LOCAL_ADMIN_FILES.has(componentName)) {
         return match; // keep local import
       }
-      return 'from "@ecom/ui"';
+      return 'from "@flash-ship/ecom-ui"';
     }
   );
 
-  // 3. Import cn helper -> @ecom/ui
+  // 3. Import cn helper -> @flash-ship/ecom-ui
   content = content.replace(
     /from\s+["']@(?:web|customer|admin)?(?:\/src)?\/lib\/utils["']/g,
-    'from "@ecom/ui"'
+    'from "@flash-ship/ecom-ui"'
   );
 
   if (content !== original) {

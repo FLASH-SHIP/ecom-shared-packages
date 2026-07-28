@@ -1,10 +1,10 @@
 import { getRoleService } from "@ecom/features/di/containers/RbacService";
-import { Permissions } from "@ecom/lib/permissions";
-import { RedisCache } from "@ecom/lib/redis";
-import { invalidateCachedSession } from "@ecom/lib/session-cache";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { RedisCache } from "@flash-ship/ecom-lib/redis";
+import { invalidateCachedSession } from "@flash-ship/ecom-lib/session-cache";
 import { prisma } from "@ecom/prisma";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 export const list = authedProcedure

@@ -1,5 +1,5 @@
 import * as hsCodeFeatures from "@ecom/features/hscodes/hscode-service";
-import { publicProcedure, router } from "@ecom/trpc-contract/server/trpc";
+import { publicProcedure, router } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 export const publicHsCodeRouter = router({

@@ -8,11 +8,11 @@ import {
 import { getTranslationService } from "@ecom/features/di/containers/TranslationService";
 import type { FilterFieldConfigMap } from "@ecom/features/shared/utils/buildPrismaWhere";
 import { buildPrismaWhere } from "@ecom/features/shared/utils/buildPrismaWhere";
-import { Permissions } from "@ecom/lib/permissions";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { requirePostPolicy } from "@ecom/trpc-contract/server/middleware/requirePolicy";
-import { filtersInputSchema } from "@ecom/trpc-contract/server/shared/filterSchema";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { requirePostPolicy } from "@flash-ship/ecom-trpc/server/middleware/requirePolicy";
+import { filtersInputSchema } from "@flash-ship/ecom-trpc/server/shared/filterSchema";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 

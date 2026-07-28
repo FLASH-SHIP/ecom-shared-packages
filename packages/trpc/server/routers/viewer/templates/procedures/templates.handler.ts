@@ -1,8 +1,8 @@
 import { ContentTemplateRepository } from "@ecom/features/template/repositories/ContentTemplateRepository";
 import { ContentTemplateService } from "@ecom/features/template/services/ContentTemplateService";
-import { Permissions } from "@ecom/lib/permissions";
-import { auditLog } from "@ecom/trpc-contract/server/middleware/auditLog";
-import { authedProcedure, requirePermission } from "@ecom/trpc-contract/server/trpc";
+import { Permissions } from "@flash-ship/ecom-lib/permissions";
+import { auditLog } from "@flash-ship/ecom-trpc/server/middleware/auditLog";
+import { authedProcedure, requirePermission } from "@flash-ship/ecom-trpc/server/trpc";
 import { z } from "zod";
 
 const getTemplateService = () =>
