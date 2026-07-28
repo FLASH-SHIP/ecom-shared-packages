@@ -41,7 +41,6 @@ jobs:
           mkdir -p packages/features packages/prisma
           cp -r .ecom-api-temp/packages/features/* packages/features/ || true
           cp -r .ecom-api-temp/packages/prisma/* packages/prisma/ || true
-          rm -f packages/features/package.json packages/prisma/package.json
           yarn prisma generate --schema packages/prisma/schema
           rm -rf .ecom-api-temp
 
