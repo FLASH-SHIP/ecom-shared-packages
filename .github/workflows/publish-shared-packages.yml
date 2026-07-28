@@ -39,7 +39,7 @@ jobs:
       - name: Link ecom-api features & prisma for tRPC build & type-check
         run: |
           mkdir -p packages/features packages/prisma
-          (cd .ecom-api-temp/packages/prisma && npx prisma generate)
+          NODE_PATH=$PWD/node_modules npx prisma generate --schema .ecom-api-temp/packages/prisma/schema
           cp -r .ecom-api-temp/packages/features/* packages/features/ || true
           cp -r .ecom-api-temp/packages/prisma/* packages/prisma/ || true
           rm -f packages/features/package.json packages/prisma/package.json
