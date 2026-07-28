@@ -29,30 +29,31 @@ jobs:
           corepack enable
           yarn install
 
-      - name: Checkout ecom-api features dependency
+      - name: Build Shared Packages
+        run: yarn build
+
+      - name: Checkout ecom-api dependencies
         uses: actions/checkout@v4
         with:
           repository: FLASH-SHIP/ecom-api
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .ecom-api-temp
 
-      - name: Link ecom-api features for tRPC type-check
+      - name: Link ecom-api features & prisma for tRPC type-check
         run: |
-          mkdir -p packages/features
+          mkdir -p packages/features packages/prisma
           cp -r .ecom-api-temp/packages/features/* packages/features/ || true
-          rm -f packages/features/package.json
+          cp -r .ecom-api-temp/packages/prisma/* packages/prisma/ || true
+          rm -f packages/features/package.json packages/prisma/package.json
           rm -rf .ecom-api-temp
 
       - name: Type-check Shared Packages
         run: yarn type-check
 
-      - name: Build Shared Packages
-        run: yarn build
-
       - name: Publish Packages to GitHub Packages
         run: |
           for pkg in packages/*; do
-            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
+            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ] && [ "$pkg" != "packages/features" ] && [ "$pkg" != "packages/prisma" ]; then
               echo "==> Publishing $pkg..."
               (cd "$pkg" && npm publish --access restricted || true)
             fi
