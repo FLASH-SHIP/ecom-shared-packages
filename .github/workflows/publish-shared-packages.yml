@@ -40,9 +40,7 @@ jobs:
           for pkg in packages/*; do
             if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
               echo "==> Publishing $pkg..."
-              cd "$pkg"
-              npm publish --access restricted || echo "Package $pkg already published or failed."
-              cd ../..
+              (cd "$pkg" && npm publish --access restricted || true)
             fi
           done
         env:
