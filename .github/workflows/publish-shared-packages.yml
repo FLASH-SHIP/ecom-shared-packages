@@ -1,0 +1,45 @@
+name: Publish Shared Packages to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+      - ".github/workflows/publish-shared-packages.yml"
+  workflow_dispatch:
+
+jobs:
+  publish-shared-packages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@ecom'
+
+      - name: Enable Corepack & Install Dependencies
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - name: Type-check Shared Packages
+        run: yarn type-check
+
+      - name: Build Shared Packages
+        run: yarn build
+
+      - name: Publish Packages to GitHub Packages via Changesets
+        run: yarn release || echo "No new package versions to publish."
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

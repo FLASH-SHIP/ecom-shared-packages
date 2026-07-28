@@ -1,0 +1,46 @@
+name: Publish @ecom/ui Package to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/ui/**"
+      - ".github/workflows/publish-ui.yml"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@ecom'
+
+      - name: Enable Corepack & Install Dependencies
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - name: Type-check @ecom/ui
+        run: yarn --cwd ./packages/ui type-check
+
+      - name: Build @ecom/ui
+        run: yarn --cwd ./packages/ui build
+
+      - name: Publish Package to GitHub Packages
+        run: |
+          cd packages/ui
+          npm publish --access restricted || echo "Package version already published."
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
