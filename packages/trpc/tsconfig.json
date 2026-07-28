@@ -14,6 +14,18 @@
       ],
       "@ecom/features/*": [
         "../features/*"
+      ],
+      "@flash-ship/ecom-lib/*": [
+        "../lib/src/*"
+      ],
+      "@flash-ship/ecom-lib": [
+        "../lib/src"
+      ],
+      "@flash-ship/ecom-types": [
+        "../types/src"
+      ],
+      "@flash-ship/ecom-i18n": [
+        "../i18n/src"
       ]
     },
     "allowSyntheticDefaultImports": true,
