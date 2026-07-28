@@ -255,6 +255,6 @@ export function buildPrismaWhere(
   }
 
   if (conditions.length === 0) return {};
-  if (conditions.length === 1) return conditions[0]!;
+  if (conditions.length === 1 && conditions[0]) return conditions[0];
   return { AND: conditions };
 }
