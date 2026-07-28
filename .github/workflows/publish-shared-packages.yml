@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js & Enable Yarn Cache
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 22
           registry-url: 'https://npm.pkg.github.com'
           scope: '@flash-ship'
           cache: 'yarn'
@@ -56,10 +56,11 @@ jobs:
                 echo "Version $CURRENT_VER for $PKG_NAME already exists on GitHub Packages. Auto-bumping patch version..."
                 (cd "$pkg" && npm version patch --no-git-tag-version)
               fi
-              echo "==> Publishing $pkg..."
-              (cd "$pkg" && npm publish --registry=https://npm.pkg.github.com --access restricted)
+              echo "==> Publishing $PKG_NAME via Yarn Berry..."
+              yarn workspace "$PKG_NAME" npm publish --access restricted
             fi
           done
         env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
