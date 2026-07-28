@@ -489,6 +489,7 @@ __metadata:
     "@types/nodemailer": "npm:^8.0.0"
     nodemailer: "npm:^8.0.10"
     typescript: "npm:^5.8.0"
+    vitest: "npm:^3.2.0"
   languageName: unknown
   linkType: soft
 
