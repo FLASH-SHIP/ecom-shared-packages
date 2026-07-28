@@ -13,7 +13,7 @@ jobs:
   publish-shared-packages:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       packages: write
 
     steps:
@@ -38,8 +38,13 @@ jobs:
       - name: Build Shared Packages
         run: yarn build
 
-      - name: Publish Packages to GitHub Packages via Changesets
-        run: yarn release || echo "No new package versions to publish."
+      - name: Publish Packages to GitHub Packages
+        run: |
+          for pkg in packages/*; do
+            if [ -f "$pkg/package.json" ]; then
+              echo "Publishing $pkg..."
+              (cd "$pkg" && npm publish --access restricted || echo "Package $pkg skipped/already published.")
+            fi
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
