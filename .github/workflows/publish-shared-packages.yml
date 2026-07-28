@@ -39,10 +39,10 @@ jobs:
       - name: Link ecom-api features & prisma for tRPC build & type-check
         run: |
           mkdir -p packages/features packages/prisma
-          yarn prisma generate --schema .ecom-api-temp/packages/prisma/schema
           cp -r .ecom-api-temp/packages/features/* packages/features/ || true
           cp -r .ecom-api-temp/packages/prisma/* packages/prisma/ || true
           rm -f packages/features/package.json packages/prisma/package.json
+          yarn prisma generate --schema packages/prisma/schema
           rm -rf .ecom-api-temp
 
       - name: Type-check Shared Packages
