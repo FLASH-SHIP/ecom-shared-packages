@@ -17,19 +17,6 @@ jobs:
       - name: Checkout ecom-shared-packages
         uses: actions/checkout@v4
 
-      - name: Checkout ecom-api features dependency
-        uses: actions/checkout@v4
-        with:
-          repository: FLASH-SHIP/ecom-api
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: .ecom-api-temp
-
-      - name: Link ecom-api features for tRPC type-check
-        run: |
-          mkdir -p packages/features
-          cp -r .ecom-api-temp/packages/features/* packages/features/ || true
-          rm -rf .ecom-api-temp
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -41,6 +28,20 @@ jobs:
         run: |
           corepack enable
           yarn install
+
+      - name: Checkout ecom-api features dependency
+        uses: actions/checkout@v4
+        with:
+          repository: FLASH-SHIP/ecom-api
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .ecom-api-temp
+
+      - name: Link ecom-api features for tRPC type-check
+        run: |
+          mkdir -p packages/features
+          cp -r .ecom-api-temp/packages/features/* packages/features/ || true
+          rm -f packages/features/package.json
+          rm -rf .ecom-api-temp
 
       - name: Type-check Shared Packages
         run: yarn type-check
