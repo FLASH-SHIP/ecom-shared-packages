@@ -17,12 +17,21 @@ jobs:
       - name: Checkout ecom-shared-packages
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js & Enable Yarn Cache
         uses: actions/setup-node@v4
         with:
           node-version: 24
           registry-url: 'https://npm.pkg.github.com'
           scope: '@flash-ship'
+          cache: 'yarn'
+
+      - name: Turbo Build Cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
 
       - name: Enable Corepack & Install Dependencies
         run: |
@@ -35,10 +44,17 @@ jobs:
       - name: Build Shared Packages
         run: yarn build
 
-      - name: Publish Packages to GitHub Packages
+      - name: Auto-Bump Version if Conflict & Publish
         run: |
           for pkg in packages/*; do
             if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
+              PKG_NAME=$(node -p "require('./$pkg/package.json').name")
+              CURRENT_VER=$(node -p "require('./$pkg/package.json').version")
+              EXISTS=$(npm view "${PKG_NAME}@${CURRENT_VER}" version --registry=https://npm.pkg.github.com 2>/dev/null || echo "")
+              if [ -n "$EXISTS" ]; then
+                echo "Version $CURRENT_VER for $PKG_NAME already exists on GitHub Packages. Auto-bumping patch version..."
+                (cd "$pkg" && npm version patch --no-git-tag-version)
+              fi
               echo "==> Publishing $pkg..."
               (cd "$pkg" && npm publish --registry=https://npm.pkg.github.com --access restricted)
             fi
