@@ -7,10 +7,10 @@
     "emitDeclarationOnly": true,
     "paths": {
       "@flash-ship/ecom-trpc/*": [
-        "./*"
+        "./server/*"
       ],
       "@ecom/trpc/*": [
-        "./*"
+        "./server/*"
       ],
       "@ecom/features/*": [
         "../features/*"
@@ -38,16 +38,10 @@
     "skipLibCheck": true
   },
   "include": [
-    "server/**/*.ts",
-    "../features/**/*.ts",
-    "../prisma/**/*.ts"
+    "server/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "../features/**/__tests__/**",
-    "../features/**/*.test.ts",
-    "../prisma/**/__tests__/**",
-    "../prisma/**/*.test.ts"
+    "dist"
   ]
 }
