@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "packages/**"
-      - ".github/workflows/publish-shared-packages.yml"
   workflow_dispatch:
 
 jobs:
@@ -30,7 +27,7 @@ jobs:
       - name: Enable Corepack & Install Dependencies
         run: |
           corepack enable
-          yarn install --immutable
+          yarn install
 
       - name: Type-check Shared Packages
         run: yarn type-check
@@ -41,9 +38,9 @@ jobs:
       - name: Publish Packages to GitHub Packages
         run: |
           for pkg in packages/*; do
-            if [ -f "$pkg/package.json" ]; then
-              echo "Publishing $pkg..."
-              (cd "$pkg" && npm publish --access restricted || echo "Package $pkg skipped/already published.")
+            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
+              echo "==> Publishing $pkg..."
+              (cd "$pkg" && npm publish --access restricted) || echo "==> Skipping $pkg (already published or error)"
             fi
           done
         env:
