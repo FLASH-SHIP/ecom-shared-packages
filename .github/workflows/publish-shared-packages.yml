@@ -56,8 +56,9 @@ jobs:
           for pkg in packages/*; do
             if [ -d "$pkg" ] && [ -f "$pkg/package.json" ] && [ "$pkg" != "packages/features" ] && [ "$pkg" != "packages/prisma" ]; then
               echo "==> Publishing $pkg..."
-              (cd "$pkg" && npm publish --access restricted || true)
+              (cd "$pkg" && npm publish --registry=https://npm.pkg.github.com --access restricted)
             fi
           done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
