@@ -15,6 +15,12 @@
       "@ecom/features/*": [
         "../features/*"
       ],
+      "@ecom/prisma": [
+        "../prisma/src"
+      ],
+      "@ecom/prisma/*": [
+        "../prisma/*"
+      ],
       "@flash-ship/ecom-lib/*": [
         "../lib/src/*"
       ],
@@ -33,12 +39,15 @@
   },
   "include": [
     "server/**/*.ts",
-    "../features/**/*.ts"
+    "../features/**/*.ts",
+    "../prisma/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "../features/**/__tests__/**",
-    "../features/**/*.test.ts"
+    "../features/**/*.test.ts",
+    "../prisma/**/__tests__/**",
+    "../prisma/**/*.test.ts"
   ]
 }
