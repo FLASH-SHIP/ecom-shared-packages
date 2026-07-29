@@ -15,7 +15,7 @@ function getJwtSecret(): string {
     if (process.env.NODE_ENV === "production") {
       throw new Error("CRITICAL: JWT_SECRET environment variable is required in production");
     }
-    return "dev-jwt-secret";
+    return "dev-jwt-secret-do-not-use-in-production";
   }
   return secret;
 }
@@ -41,7 +41,7 @@ function getJwtAdminSecret(): string {
     if (process.env.NODE_ENV === "production") {
       throw new Error("CRITICAL: JWT_ADMIN_SECRET environment variable is required in production");
     }
-    return "dev-jwt-secret";
+    return "dev-jwt-secret-do-not-use-in-production";
   }
   return secret;
 }
@@ -95,7 +95,11 @@ export function signAccessToken(payload: Omit<JwtPayload, "type">): string {
 /**
  * Sign a JWT access token for Customer users (audience: "ecom-customer").
  */
-export function signCustomerAccessToken(payload: { sub: string; email?: string; tokenVersion?: number }): string {
+export function signCustomerAccessToken(payload: {
+  sub: string;
+  email?: string;
+  tokenVersion?: number;
+}): string {
   const options: SignOptions = {
     expiresIn: getAccessTokenTtl(),
     issuer: JWT_ISSUER,
