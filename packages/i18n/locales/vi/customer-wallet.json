@@ -111,7 +111,8 @@
     "wireAmount": "Số tiền nạp",
     "approvedAmount": "Số tiền đã duyệt",
     "action": "Thao tác",
-    "noRecordsFound": "Không tìm thấy lịch sử nạp tiền nào."
+    "noRecordsFound": "Không tìm thấy lịch sử nạp tiền nào.",
+    "wireTransferConfirmation": "Xác nhận giao dịch"
   },
   "quickTopupTitle": "Nạp tiền vào ví",
   "quickTopupDesc": "Chọn mệnh giá hoặc nhập số tiền tùy chỉnh để nạp tiền nhanh chóng.",

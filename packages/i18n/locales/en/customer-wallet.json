@@ -111,7 +111,8 @@
     "wireAmount": "Wire Amount",
     "approvedAmount": "Approved Amount",
     "action": "Action",
-    "noRecordsFound": "No top-up records found."
+    "noRecordsFound": "No top-up records found.",
+    "wireTransferConfirmation": "Wire transfer confirmation"
   },
   "quickTopupTitle": "Top up your wallet",
   "quickTopupDesc": "Choose an amount or enter a custom amount to top up instantly.",

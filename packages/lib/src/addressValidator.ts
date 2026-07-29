@@ -1,3 +1,5 @@
+import { translate } from "@flash-ship/ecom-i18n";
+
 export interface PostalCodeRule {
   regex: RegExp;
   description: string;
@@ -111,9 +113,13 @@ export function getPostalCodeRuleInfo(countryCode: string): PostalCodeRule | nul
 export function validateReceiverState(
   countryCode: string,
   state: string,
+  locale?: string,
 ): { valid: boolean; message?: string } {
   if (!state || state.trim() === "") {
-    return { valid: false, message: "Vui lòng nhập/chọn State" };
+    return {
+      valid: false,
+      message: translate("customerOrder.validation.receiverStateRequired", locale),
+    };
   }
   const cleanCountry = (countryCode || "").toUpperCase().trim();
   const cleanState = state.trim();
@@ -122,12 +128,15 @@ export function validateReceiverState(
     if (!/^[A-Z]{2}$/.test(cleanState)) {
       return {
         valid: false,
-        message: "Nếu quốc gia là Hoa Kỳ (US), State phải là mã 2 ký tự viết hoa (VD: CA, WA, NY)",
+        message: translate("customerOrder.validation.receiverStateUsFormat", locale),
       };
     }
   } else {
     if (cleanState.length > 50) {
-      return { valid: false, message: "State không được vượt quá 50 ký tự" };
+      return {
+        valid: false,
+        message: translate("customerOrder.validation.receiverStateMax", locale),
+      };
     }
   }
   return { valid: true };
