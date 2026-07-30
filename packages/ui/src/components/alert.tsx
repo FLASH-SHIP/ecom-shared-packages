@@ -1,6 +1,7 @@
-import { cn } from "../lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { AlertCircle, CheckCircle2, Info, TriangleAlert } from "lucide-react";
+
+import { cn } from "../lib/utils";
 
 const alertVariants = cva("relative flex gap-3 rounded-lg border p-4 text-sm", {
   variants: {
@@ -40,9 +41,15 @@ function Alert({ className, variant = "default", title, children, ...props }: Al
   return (
     <div role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
       <Icon className="h-5 w-5 shrink-0 mt-0.5" />
-      <div className="flex-1">
-        {title && <h5 className="mb-1 font-medium leading-none">{title}</h5>}
-        <div className="text-sm opacity-90">{children}</div>
+      <div className="flex-1 min-w-0">
+        {title && (
+          <h5 className="mb-1 font-medium leading-none whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
+            {title}
+          </h5>
+        )}
+        <div className="text-sm opacity-90 whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
+          {children}
+        </div>
       </div>
     </div>
   );
