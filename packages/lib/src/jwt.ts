@@ -89,7 +89,7 @@ export function signAccessToken(payload: Omit<JwtPayload, "type">): string {
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
   };
-  return jwt.sign({ ...payload, type: "access" }, getJwtSecret(), options);
+  return jwt.sign({ ...payload, type: "access" }, getJwtAdminSecret(), options);
 }
 
 /**
@@ -127,7 +127,7 @@ export function signRefreshToken(payload: Omit<JwtPayload, "type">): string {
  * Throws if the token is invalid or expired.
  */
 export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, getJwtSecret(), {
+  return jwt.verify(token, getJwtAdminSecret(), {
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
   }) as JwtPayload;
