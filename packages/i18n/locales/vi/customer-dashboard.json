@@ -18,6 +18,9 @@
   "changePassword": "Đổi mật khẩu",
   "logout": "Đăng xuất",
   "customer": "Khách hàng",
+  "createSingleOrder": "Tạo đơn lẻ",
+  "importOrderFile": "Nhập đơn bằng file",
+  "topup": "Nạp tiền",
   "sidebar": {
     "general": "CHUNG",
     "orderInformation": "THÔNG TIN ĐƠN HÀNG",
