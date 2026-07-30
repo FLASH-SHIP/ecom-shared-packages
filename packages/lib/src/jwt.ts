@@ -6,10 +6,10 @@ const JWT_ISSUER = "ecom";
 const JWT_AUDIENCE = "ecom-api";
 
 /**
- * Get JWT secret with production safety guard.
- * Throws in production if JWT_SECRET is not set (SEC-01).
+ * Get Customer JWT secret with production safety guard.
+ * Throws in production if JWT_SECRET or AUTH_SECRET is not set (SEC-01).
  */
-function getJwtSecret(): string {
+function getCustomerJwtSecret(): string {
   const secret = process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
@@ -28,7 +28,7 @@ function getJwtRefreshSecret(): string {
   const refreshSecret = process.env.JWT_REFRESH_SECRET;
   if (refreshSecret) return refreshSecret;
 
-  const baseSecret = getJwtSecret();
+  const baseSecret = getCustomerJwtSecret();
   if (process.env.NODE_ENV === "production" && !refreshSecret) {
     return `${baseSecret}:refresh`;
   }
@@ -105,7 +105,7 @@ export function signCustomerAccessToken(payload: {
     issuer: JWT_ISSUER,
     audience: "ecom-customer",
   };
-  return jwt.sign({ ...payload, type: "access" }, getJwtSecret(), options);
+  return jwt.sign({ ...payload, type: "access" }, getCustomerJwtSecret(), options);
 }
 
 /**
