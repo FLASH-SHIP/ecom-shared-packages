@@ -10,10 +10,10 @@ const JWT_AUDIENCE = "ecom-api";
  * Throws in production if JWT_SECRET is not set (SEC-01).
  */
 function getJwtSecret(): string {
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("CRITICAL: JWT_SECRET environment variable is required in production");
+      throw new Error("CRITICAL: JWT_SECRET or AUTH_SECRET environment variable is required in production");
     }
     return "dev-jwt-secret-do-not-use-in-production";
   }
@@ -36,10 +36,10 @@ function getJwtRefreshSecret(): string {
 }
 
 function getJwtAdminSecret(): string {
-  const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET;
+  const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("CRITICAL: JWT_ADMIN_SECRET environment variable is required in production");
+      throw new Error("CRITICAL: JWT_ADMIN_SECRET or AUTH_SECRET environment variable is required in production");
     }
     return "dev-jwt-secret-do-not-use-in-production";
   }
