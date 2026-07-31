@@ -1,7 +1,6 @@
 {
   "name": "@flash-ship/ecom-trpc-types",
   "version": "1.0.0",
-  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FLASH-SHIP/ecom-shared-packages.git"
