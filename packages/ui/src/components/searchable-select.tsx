@@ -11,6 +11,7 @@ interface SearchableSelectOption {
   value: string;
   label: string;
   icon?: string;
+  image?: string | null;
   separatorAfter?: boolean;
 }
 
@@ -88,13 +89,19 @@ function SearchableSelect({
             className,
           )}
         >
-          <span className="truncate">
-            {selectedOption?.icon && (
-              <span className="mr-1.5 inline-block w-4 text-center font-mono text-xs text-muted-foreground">
+          <span className="truncate flex items-center min-w-0" title={selectedOption ? selectedOption.label : placeholder}>
+            {selectedOption?.image ? (
+              <img
+                src={selectedOption.image}
+                alt={selectedOption.label}
+                className="mr-1.5 size-4 rounded-full object-contain shrink-0 border border-slate-200"
+              />
+            ) : selectedOption?.icon ? (
+              <span className="mr-1.5 inline-block w-4 text-center font-mono text-xs text-muted-foreground shrink-0">
                 {selectedOption.icon}
               </span>
-            )}
-            {selectedOption ? selectedOption.label : placeholder}
+            ) : null}
+            <span className="truncate">{selectedOption ? selectedOption.label : placeholder}</span>
           </span>
           <span className="ml-auto flex shrink-0 items-center gap-1">
             {showClear && (
@@ -123,7 +130,10 @@ function SearchableSelect({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+      <PopoverContent
+        className="w-auto min-w-[var(--radix-popover-trigger-width)] max-w-[360px] p-0"
+        align="start"
+      >
         <div className="flex items-center border-b border-border px-2.5 py-2">
           <Search className="mr-2 size-3.5 shrink-0 text-muted-foreground" />
           <input
@@ -135,7 +145,10 @@ function SearchableSelect({
         </div>
 
         {/* Options list */}
-        <div className="overflow-y-auto p-1" style={{ maxHeight }}>
+        <div
+          className="overflow-y-auto p-1 pr-1 searchable-select-scrollbar"
+          style={{ maxHeight, scrollbarWidth: "thin", scrollbarColor: "rgba(0,0,0,0.18) transparent" }}
+        >
           {filteredOptions.length === 0 ? (
             <div className="py-4 text-center text-sm text-muted-foreground">No results found.</div>
           ) : (
@@ -143,6 +156,7 @@ function SearchableSelect({
               <div key={opt.value}>
                 <button
                   type="button"
+                  title={opt.label}
                   onClick={() => handleSelect(opt.value)}
                   className={cn(
                     "flex w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground",
@@ -155,12 +169,18 @@ function SearchableSelect({
                       value === opt.value ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {opt.icon && (
-                    <span className="inline-block w-4 text-center font-mono text-xs text-muted-foreground">
+                  {opt.image ? (
+                    <img
+                      src={opt.image}
+                      alt={opt.label}
+                      className="size-4 rounded-full object-contain shrink-0 border border-slate-200"
+                    />
+                  ) : opt.icon ? (
+                    <span className="inline-block w-4 text-center font-mono text-xs text-muted-foreground shrink-0">
                       {opt.icon}
                     </span>
-                  )}
-                  <span className="truncate">{opt.label}</span>
+                  ) : null}
+                  <span className="truncate" title={opt.label}>{opt.label}</span>
                 </button>
                 {opt.separatorAfter && <div className="my-1 h-px bg-border" />}
               </div>

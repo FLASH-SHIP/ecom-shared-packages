@@ -40,6 +40,7 @@ export * from "./components/empty-state";
 export * from "./components/perfect-scroll";
 export * from "./components/icons";
 export * from "./components/modals/base-modal";
+export * from "./components/modals/image-preview-modal";
 
 // Icons
 export * from "./components/icon-component/AppleIcon";

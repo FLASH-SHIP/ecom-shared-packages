@@ -136,9 +136,6 @@
   "history": "Lịch sử nạp tiền",
   "searchPlaceholder": "Tìm kiếm giao dịch nạp tiền...",
   "status": {
-    "completed": "Hoàn thành",
-    "pending": "Chờ xác nhận",
-    "failed": "Thất bại",
     "waiting": "Chờ xác nhận",
     "confirm": "Đã xác nhận",
     "reject": "Từ chối"

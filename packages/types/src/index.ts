@@ -132,3 +132,14 @@ export const SHIPPING_METHOD_OPTIONS = Object.values(ShippingMethod).map((value)
   value,
   label: getShippingMethodLabel(value),
 }));
+
+/**
+ * Topup Transaction Status Enum
+ * 1 = Waiting, 2 = Confirmed, 3 = Reject
+ */
+export enum TopupStatus {
+  WAITING = 1,
+  CONFIRMED = 2,
+  REJECT = 3,
+}
+

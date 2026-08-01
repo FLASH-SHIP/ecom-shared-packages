@@ -114,6 +114,13 @@ export const Permissions = {
   NOTIFICATIONS_BROADCAST_DELETE: "notifications.broadcast.delete",
   NOTIFICATIONS_SETTINGS_READ: "notifications.settings.read",
   NOTIFICATIONS_SETTINGS_UPDATE: "notifications.settings.update",
+
+  // Finance & Topup
+  TOPUP_TRANSACTIONS_READ: "finance.topup.read",
+  TOPUP_TRANSACTIONS_APPROVE: "finance.topup.approve",
+  TOPUP_TRANSACTIONS_REJECT: "finance.topup.reject",
+  TOPUP_TRANSACTIONS_UPDATE: "finance.topup.update",
+  TOPUP_TRANSACTIONS_DELETE: "finance.topup.delete",
 } as const;
 
 export type PermissionName = (typeof Permissions)[keyof typeof Permissions];
@@ -725,5 +732,46 @@ export const ALL_PERMISSIONS: SystemPermission[] = [
     section: "settings",
     module: "notifications",
     parent: Permissions.NOTIFICATIONS_SETTINGS_READ,
+  },
+
+  // Finance & Topup
+  {
+    name: Permissions.TOPUP_TRANSACTIONS_READ,
+    displayName: "View Topup Transactions",
+    group: "finance",
+    section: "finance",
+    module: "topup",
+  },
+  {
+    name: Permissions.TOPUP_TRANSACTIONS_APPROVE,
+    displayName: "Approve Topup Transactions",
+    group: "finance",
+    section: "finance",
+    module: "topup",
+    parent: Permissions.TOPUP_TRANSACTIONS_READ,
+  },
+  {
+    name: Permissions.TOPUP_TRANSACTIONS_REJECT,
+    displayName: "Reject Topup Transactions",
+    group: "finance",
+    section: "finance",
+    module: "topup",
+    parent: Permissions.TOPUP_TRANSACTIONS_READ,
+  },
+  {
+    name: Permissions.TOPUP_TRANSACTIONS_UPDATE,
+    displayName: "Update Topup Transactions",
+    group: "finance",
+    section: "finance",
+    module: "topup",
+    parent: Permissions.TOPUP_TRANSACTIONS_READ,
+  },
+  {
+    name: Permissions.TOPUP_TRANSACTIONS_DELETE,
+    displayName: "Delete Topup Transactions",
+    group: "finance",
+    section: "finance",
+    module: "topup",
+    parent: Permissions.TOPUP_TRANSACTIONS_READ,
   },
 ];

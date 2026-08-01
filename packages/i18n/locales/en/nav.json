@@ -50,5 +50,7 @@
   "create": "Create",
   "edit": "Edit",
   "new": "Create",
-  "profile": "Profile"
+  "profile": "Profile",
+  "finance": "Finance",
+  "topupManagement": "Top-up Management"
 }

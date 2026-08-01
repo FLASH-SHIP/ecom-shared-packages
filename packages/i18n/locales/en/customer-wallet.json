@@ -136,9 +136,6 @@
   "history": "Top-up History",
   "searchPlaceholder": "Search top-up requests...",
   "status": {
-    "completed": "Completed",
-    "pending": "Pending Confirmation",
-    "failed": "Failed",
     "waiting": "Waiting",
     "confirm": "Confirmed",
     "reject": "Rejected"
