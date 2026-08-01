@@ -43,6 +43,8 @@ export * from "./components/PhoneInput";
 export * from "./components/language-switcher";
 export * from "./components/modals/base-modal";
 export * from "./components/modals/image-preview-modal";
+export * from "./components/modals/confirm-modal";
+export * from "./components/modals/topup-confirm-modal";
 
 // Icons
 export * from "./components/icon-component/AppleIcon";
