@@ -26,6 +26,8 @@
     "statusWaiting": "Chờ xác nhận",
     "statusConfirm": "Đã xác nhận",
     "statusReject": "Từ chối",
+    "searchPaymentMethod": "Tìm kiếm phương thức...",
+    "searchStatus": "Tìm kiếm trạng thái...",
     "clearAll": "Xóa tất cả",
     "export": "Xuất dữ liệu"
   },
@@ -122,7 +124,8 @@
     "approvedAmount": "Số tiền đã duyệt",
     "action": "Thao tác",
     "noRecordsFound": "Không tìm thấy lịch sử nạp tiền nào.",
-    "wireTransferConfirmation": "Xác nhận giao dịch"
+    "wireTransferConfirmation": "Xác nhận giao dịch",
+    "records": "giao dịch"
   },
   "quickTopupTitle": "Nạp tiền vào ví",
   "quickTopupDesc": "Chọn mệnh giá hoặc nhập số tiền tùy chỉnh để nạp tiền nhanh chóng.",

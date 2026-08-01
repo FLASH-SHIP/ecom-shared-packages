@@ -11,7 +11,8 @@
     "signUp": "Sign up",
     "invalidCredentials": "Invalid username or password.",
     "unexpectedError": "An unexpected error occurred. Please try again later.",
-    "emailUsernameRequired": "Please enter your email or username"
+    "emailUsernameRequired": "Please enter your email or username",
+    "welcomeMessage": "🎉 Welcome back to Ecom Express, {name}!"
   },
   "register": {
     "title": "Sign up",

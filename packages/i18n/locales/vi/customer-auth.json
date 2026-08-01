@@ -11,7 +11,8 @@
     "signUp": "Đăng ký ngay",
     "invalidCredentials": "Tên đăng nhập hoặc mật khẩu không chính xác.",
     "unexpectedError": "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.",
-    "emailUsernameRequired": "Vui lòng nhập email hoặc tên đăng nhập"
+    "emailUsernameRequired": "Vui lòng nhập email hoặc tên đăng nhập",
+    "welcomeMessage": "🎉 Chào mừng {name} đã quay trở lại với Ecom Express!"
   },
   "register": {
     "title": "Đăng ký",

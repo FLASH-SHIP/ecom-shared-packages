@@ -56,6 +56,7 @@
     "successUpdated": "Cập nhật thành công",
     "successDeleted": "Xóa thành công",
     "successSaved": "Lưu thành công",
+    "copiedToClipboard": "Đã sao chép vào bộ nhớ tạm",
     "errorOccurred": "Đã xảy ra lỗi. Vui lòng thử lại.",
     "unexpectedError": "Trang này gặp sự cố không mong muốn.",
     "customFields": "Trường tùy chỉnh",
