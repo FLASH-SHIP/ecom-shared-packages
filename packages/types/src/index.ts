@@ -143,3 +143,33 @@ export enum TopupStatus {
   REJECT = 3,
 }
 
+export type OrderStatus =
+  | "DRAFT"
+  | "PENDING"
+  | "PROCESSING"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED"
+  | "RETURNED"
+  | "LABEL_CREATED"
+  | "PENDING_LABEL"
+  | "PACKAGE_RECEIVED"
+  | "ON_THE_WAY"
+  | "PICK_UP"
+  | "DELIVERY";
+
+export type PackingBoxType = "BOX" | "BAG" | "PALLET" | "ENVELOPE";
+
+export type RateCardStatus =
+  | "ACTIVE"
+  | "INACTIVE"
+  | "DRAFT"
+  | "ARCHIVED"
+  | "PUBLISHED"
+  | "PENDING"
+  | "REVIEW"
+  | "REJECTED";
+
+export type RateCardType = "DEFAULT" | "CUSTOM" | "STANDARD" | "SPECIAL" | "PROMOTIONAL";
+
+
