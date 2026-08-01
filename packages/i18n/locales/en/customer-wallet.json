@@ -26,6 +26,8 @@
     "statusWaiting": "Waiting",
     "statusConfirm": "Confirmed",
     "statusReject": "Rejected",
+    "searchPaymentMethod": "Search payment method...",
+    "searchStatus": "Search status...",
     "clearAll": "Clear All",
     "export": "Export"
   },
@@ -122,7 +124,8 @@
     "approvedAmount": "Approved Amount",
     "action": "Action",
     "noRecordsFound": "No top-up records found.",
-    "wireTransferConfirmation": "Wire transfer confirmation"
+    "wireTransferConfirmation": "Wire transfer confirmation",
+    "records": "records"
   },
   "quickTopupTitle": "Top up your wallet",
   "quickTopupDesc": "Choose an amount or enter a custom amount to top up instantly.",
