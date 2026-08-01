@@ -6,14 +6,14 @@ const JWT_ISSUER = "ecom";
 const JWT_AUDIENCE = "ecom-api";
 
 /**
- * Get JWT secret with production safety guard.
- * Throws in production if JWT_SECRET is not set (SEC-01).
+ * Get Customer JWT secret with production safety guard.
+ * Throws in production if JWT_SECRET or AUTH_SECRET is not set (SEC-01).
  */
-function getJwtSecret(): string {
-  const secret = process.env.JWT_SECRET;
+function getCustomerJwtSecret(): string {
+  const secret = process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("CRITICAL: JWT_SECRET environment variable is required in production");
+      throw new Error("CRITICAL: JWT_SECRET or AUTH_SECRET environment variable is required in production");
     }
     return "dev-jwt-secret-do-not-use-in-production";
   }
@@ -21,25 +21,32 @@ function getJwtSecret(): string {
 }
 
 /**
- * Get separate secret for refresh tokens (SEC-03).
- * Falls back to JWT_SECRET + suffix if JWT_REFRESH_SECRET is not set.
+ * Get separate secret for Customer refresh tokens.
  */
-function getJwtRefreshSecret(): string {
-  const refreshSecret = process.env.JWT_REFRESH_SECRET;
+function getCustomerJwtRefreshSecret(): string {
+  const refreshSecret = process.env.JWT_CUSTOMER_REFRESH_SECRET || process.env.JWT_REFRESH_SECRET;
   if (refreshSecret) return refreshSecret;
 
-  const baseSecret = getJwtSecret();
-  if (process.env.NODE_ENV === "production" && !refreshSecret) {
-    return `${baseSecret}:refresh`;
-  }
+  const baseSecret = getCustomerJwtSecret();
+  return `${baseSecret}:refresh`;
+}
+
+/**
+ * Get separate secret for Admin refresh tokens.
+ */
+function getAdminJwtRefreshSecret(): string {
+  const refreshSecret = process.env.JWT_ADMIN_REFRESH_SECRET || process.env.JWT_REFRESH_SECRET;
+  if (refreshSecret) return refreshSecret;
+
+  const baseSecret = getJwtAdminSecret();
   return `${baseSecret}:refresh`;
 }
 
 function getJwtAdminSecret(): string {
-  const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET;
+  const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("CRITICAL: JWT_ADMIN_SECRET environment variable is required in production");
+      throw new Error("CRITICAL: JWT_ADMIN_SECRET or AUTH_SECRET environment variable is required in production");
     }
     return "dev-jwt-secret-do-not-use-in-production";
   }
@@ -89,7 +96,7 @@ export function signAccessToken(payload: Omit<JwtPayload, "type">): string {
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
   };
-  return jwt.sign({ ...payload, type: "access" }, getJwtSecret(), options);
+  return jwt.sign({ ...payload, type: "access" }, getJwtAdminSecret(), options);
 }
 
 /**
@@ -105,13 +112,11 @@ export function signCustomerAccessToken(payload: {
     issuer: JWT_ISSUER,
     audience: "ecom-customer",
   };
-  return jwt.sign({ ...payload, type: "access" }, getJwtSecret(), options);
+  return jwt.sign({ ...payload, type: "access" }, getCustomerJwtSecret(), options);
 }
 
 /**
- * Sign a JWT refresh token (long-lived: 30 days default).
- * Uses separate secret from access token (SEC-03).
- * Includes iss/aud claims for multi-service differentiation (SEC-09).
+ * Sign a JWT refresh token for Admin (audience: "ecom-api").
  */
 export function signRefreshToken(payload: Omit<JwtPayload, "type">): string {
   const options: SignOptions = {
@@ -119,27 +124,49 @@ export function signRefreshToken(payload: Omit<JwtPayload, "type">): string {
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
   };
-  return jwt.sign({ ...payload, type: "refresh" }, getJwtRefreshSecret(), options);
+  return jwt.sign({ ...payload, type: "refresh" }, getAdminJwtRefreshSecret(), options);
 }
 
 /**
- * Verify and decode a JWT access token.
+ * Sign a JWT refresh token for Customer (audience: "ecom-customer").
+ */
+export function signCustomerRefreshToken(payload: Omit<JwtPayload, "type">): string {
+  const options: SignOptions = {
+    expiresIn: getRefreshTokenTtl(),
+    issuer: JWT_ISSUER,
+    audience: "ecom-customer",
+  };
+  return jwt.sign({ ...payload, type: "refresh" }, getCustomerJwtRefreshSecret(), options);
+}
+
+/**
+ * Verify and decode an Admin JWT access token.
  * Throws if the token is invalid or expired.
  */
 export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, getJwtSecret(), {
+  return jwt.verify(token, getJwtAdminSecret(), {
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
   }) as JwtPayload;
 }
 
 /**
- * Verify and decode a JWT refresh token using the separate refresh secret.
+ * Verify and decode an Admin JWT refresh token using the separate refresh secret.
  */
 export function verifyRefreshToken(token: string): JwtPayload {
-  return jwt.verify(token, getJwtRefreshSecret(), {
+  return jwt.verify(token, getAdminJwtRefreshSecret(), {
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
+  }) as JwtPayload;
+}
+
+/**
+ * Verify and decode a Customer JWT refresh token using the customer refresh secret.
+ */
+export function verifyCustomerRefreshToken(token: string): JwtPayload {
+  return jwt.verify(token, getCustomerJwtRefreshSecret(), {
+    issuer: JWT_ISSUER,
+    audience: "ecom-customer",
   }) as JwtPayload;
 }
 

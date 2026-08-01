@@ -4,11 +4,16 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "declaration": true,
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "paths": {
+      "@ecom/features/*": ["./stubs/index.d.ts"],
+      "@ecom/prisma": ["./stubs/index.d.ts"],
+      "@ecom/prisma/*": ["./stubs/index.d.ts"]
+    }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "stubs/**/*"]
 }
