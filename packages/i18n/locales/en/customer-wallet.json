@@ -46,7 +46,7 @@
     "no": "No.",
     "date": "Date",
     "orderCode": "Order code",
-    "partnerOrderId": "Partner Order ID",
+    "partnerOrderId": "Order ID",
     "transactionType": "Transaction type",
     "initialAmount": "Initial amount",
     "amount": "Amount",
