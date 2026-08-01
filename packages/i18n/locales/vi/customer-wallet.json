@@ -66,7 +66,9 @@
   },
   "topupModal": {
     "title": "Nạp tiền",
-    "pleaseSelectPaymentMethod": "Vui lòng chọn phương thức thanh toán:"
+    "pleaseSelectPaymentMethod": "Vui lòng chọn phương thức thanh toán:",
+    "noPaymentMethods": "Chưa có phương thức thanh toán nào khả dụng.",
+    "loadingPaymentMethods": "Đang tải phương thức thanh toán..."
   },
   "addFundModal": {
     "titleVia": "Nạp tiền qua",
@@ -97,8 +99,11 @@
     "uploadNote": "(Tải lên tối đa 10 ảnh, dung lượng mỗi ảnh không quá 5MB)",
     "uploadButton": "Tải ảnh lên",
     "wireDateRequired": "Vui lòng chọn ngày chuyển tiền.",
+    "wireDateFutureError": "Ngày chuyển tiền không được lớn hơn ngày hiện tại.",
     "wireAmountRequired": "Vui lòng nhập số tiền nạp.",
+    "wireAmountPositive": "Số tiền nạp phải lớn hơn 0.",
     "uploadRequired": "Vui lòng tải lên ít nhất 1 ảnh chứng từ xác nhận chuyển tiền.",
+    "paymentMethodInvalid": "Phương thức thanh toán không hợp lệ hoặc đã ngưng hoạt động.",
     "copySuccess": "Đã sao chép vào bộ nhớ tạm!",
     "dragAndDrop": "Kéo & thả hoặc",
     "browse": "Tải ảnh lên",
@@ -110,7 +115,31 @@
     "submit": "Xác nhận gửi",
     "submitting": "Đang xử lý...",
     "createSuccess": "Tạo yêu cầu nạp tiền thành công!",
-    "createError": "Tạo yêu cầu nạp tiền thất bại!"
+    "createError": "Tạo yêu cầu nạp tiền thất bại!",
+    "uploadError": "Tải ảnh chứng từ thất bại."
+  },
+  "editTopupModal": {
+    "title": "Cập nhật giao dịch",
+    "transactionCodeLabel": "Mã giao dịch",
+    "currentPaymentMethodLabel": "Phương thức thanh toán",
+    "oldProofTitle": "Chứng từ giao dịch cũ",
+    "newProofTitle": "Tải chứng từ giao dịch mới",
+    "uploadRequired": "Vui lòng tải lên ít nhất 1 ảnh chứng từ xác nhận chuyển tiền mới.",
+    "updateButton": "Cập nhật",
+    "updateSuccess": "Cập nhật giao dịch nạp tiền thành công!",
+    "updateError": "Cập nhật giao dịch nạp tiền thất bại!",
+    "uploadError": "Tải ảnh chứng từ mới thất bại."
+  },
+  "cancelTopupModal": {
+    "title": "Hủy giao dịch nạp tiền",
+    "amountLabel": "SỐ TIỀN YÊU CẦU NẠP",
+    "paymentMethodLabel": "Phương thức thanh toán",
+    "transactionCodeLabel": "Mã giao dịch",
+    "confirmQuestion": "Bạn có chắc chắn muốn hủy giao dịch nạp tiền này không?",
+    "cancelButton": "Đóng lại",
+    "confirmButton": "Xác nhận hủy",
+    "cancelSuccess": "Hủy giao dịch nạp tiền thành công!",
+    "cancelError": "Hủy giao dịch nạp tiền thất bại!"
   },
   "table": {
     "no": "No.",

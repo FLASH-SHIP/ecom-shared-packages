@@ -66,7 +66,9 @@
   },
   "topupModal": {
     "title": "Top-up",
-    "pleaseSelectPaymentMethod": "Please select payment method:"
+    "pleaseSelectPaymentMethod": "Please select payment method:",
+    "noPaymentMethods": "No active payment methods configured yet.",
+    "loadingPaymentMethods": "Loading payment methods..."
   },
   "addFundModal": {
     "titleVia": "Top-up via",
@@ -97,8 +99,11 @@
     "uploadNote": "(Maximum 10 images, each image not exceeding 5MB)",
     "uploadButton": "Upload file",
     "wireDateRequired": "Please select wire date.",
+    "wireDateFutureError": "Wire date cannot be in the future.",
     "wireAmountRequired": "Please enter wire amount.",
+    "wireAmountPositive": "Wire amount must be greater than 0.",
     "uploadRequired": "Please upload at least 1 wire transfer confirmation image.",
+    "paymentMethodInvalid": "Invalid or inactive payment method.",
     "copySuccess": "Copied to clipboard!",
     "dragAndDrop": "Drag & drop or",
     "browse": "Browse",
@@ -110,7 +115,31 @@
     "submit": "Submit",
     "submitting": "Submitting...",
     "createSuccess": "Top-up request created successfully!",
-    "createError": "Failed to create top-up request!"
+    "createError": "Failed to create top-up request!",
+    "uploadError": "Failed to upload proof image."
+  },
+  "editTopupModal": {
+    "title": "Update transaction",
+    "transactionCodeLabel": "Transaction code",
+    "currentPaymentMethodLabel": "Payment method",
+    "oldProofTitle": "Old top-up confirmation",
+    "newProofTitle": "New top-up confirmation",
+    "uploadRequired": "Please upload at least 1 new wire transfer confirmation image.",
+    "updateButton": "Update",
+    "updateSuccess": "Transaction updated successfully!",
+    "updateError": "Failed to update transaction.",
+    "uploadError": "Failed to upload new proof image."
+  },
+  "cancelTopupModal": {
+    "title": "Cancel top-up request",
+    "amountLabel": "REQUESTED TOP-UP AMOUNT",
+    "paymentMethodLabel": "Payment method",
+    "transactionCodeLabel": "Transaction code",
+    "confirmQuestion": "Are you sure you want to cancel this top-up request?",
+    "cancelButton": "Close",
+    "confirmButton": "Confirm",
+    "cancelSuccess": "Top-up request cancelled successfully!",
+    "cancelError": "Failed to cancel top-up request."
   },
   "table": {
     "no": "No.",
