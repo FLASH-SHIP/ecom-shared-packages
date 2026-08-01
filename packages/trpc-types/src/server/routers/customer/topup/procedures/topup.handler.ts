@@ -55,11 +55,45 @@ export const getTopupHistory = authedProcedure
     });
   });
 
+/**
+ * TRPC Procedure Lấy danh sách lịch sử biến động số dư ví (`getTransactionHistory`)
+ */
+export const getTransactionHistory = authedProcedure
+  .input(
+    z
+      .object({
+        page: z.number().int().positive().optional().default(1),
+        pageSize: z.number().int().min(1).max(100).optional().default(10),
+        search: z.string().optional(),
+        topupType: z.string().optional(),
+        dateFrom: z.string().optional(),
+        dateTo: z.string().optional(),
+        sortBy: z.string().optional().default("updatedAt"),
+        sortOrder: z.enum(["asc", "desc"]).optional().default("desc"),
+      })
+      .optional(),
+  )
+  .query(async ({ ctx, input }) => {
+    return getTopupTransactionService().getTransactionHistoryList({
+      customerId: ctx.user.id,
+      page: input?.page,
+      pageSize: input?.pageSize,
+      search: input?.search,
+      topupType: input?.topupType,
+      dateFrom: input?.dateFrom ? new Date(input.dateFrom) : undefined,
+      dateTo: input?.dateTo ? new Date(input.dateTo) : undefined,
+      sortBy: input?.sortBy,
+      sortOrder: input?.sortOrder,
+    });
+  });
+
 export const createTopupRequest = authedProcedure
   .input(
     z.object({
       paymentMethodId: z.number().int().positive(),
       wireAmount: z.number().positive(),
+      currency: z.string().optional(),
+      rate: z.number().optional(),
       description: z.string().optional(),
       wireDate: z.string().optional(),
       wireImages: z.array(z.string()).optional(),
@@ -70,6 +104,8 @@ export const createTopupRequest = authedProcedure
       customerId: ctx.user.id,
       paymentMethodId: input.paymentMethodId,
       wireAmount: input.wireAmount,
+      currency: input.currency,
+      rate: input.rate,
       description: input.description,
       wireDate: input.wireDate ? new Date(input.wireDate) : undefined,
       wireImages: input.wireImages,

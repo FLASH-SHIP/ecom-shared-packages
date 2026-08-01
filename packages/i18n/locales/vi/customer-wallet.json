@@ -46,7 +46,7 @@
     "no": "No.",
     "date": "Ngày giao dịch",
     "orderCode": "Mã đơn hàng",
-    "partnerOrderId": "Partner Order ID",
+    "partnerOrderId": "Order ID",
     "transactionType": "Loại giao dịch",
     "initialAmount": "Số dư đầu kỳ",
     "amount": "Số tiền",

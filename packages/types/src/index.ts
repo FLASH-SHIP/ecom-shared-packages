@@ -143,6 +143,21 @@ export enum TopupStatus {
   REJECT = 3,
 }
 
+/**
+ * Enum Loại Giao Dịch Ví / Nạp Tiền (TopupType / TransactionType)
+ */
+export enum TopupType {
+  ADDED_FUNDS = "ADDED_FUNDS",
+  PAID = "PAID",
+  CANCELED = "CANCELED",
+  REFUNDED = "REFUNDED",
+  ADJUST_BALANCE_INCREASE = "ADJUST_BALANCE_INCREASE",
+  ADJUST_BALANCE_DECREASE = "ADJUST_BALANCE_DECREASE",
+}
+
+export type TransactionType = TopupType;
+export const TransactionType = TopupType;
+
 export type OrderStatus =
   | "DRAFT"
   | "PENDING"
