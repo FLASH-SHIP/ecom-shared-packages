@@ -156,10 +156,10 @@ const t = initTRPC.context<Context>().create({
   },
 });
 
-// Omitted backend event listeners for client types
+import { registerEventListeners } from "@ecom/features/events/listeners";
 
 // Initialize domain event listeners for tRPC environment
-// Omitted registerEventListeners for client types
+registerEventListeners();
 
 export const router = t.router;
 export const publicProcedure = t.procedure;

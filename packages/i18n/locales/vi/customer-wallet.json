@@ -87,9 +87,16 @@
     "exchangeRateValue": "25.000 VND = 1 USD",
     "exchangeRateNote": "(Tỷ giá có thể thay đổi theo thời gian)",
     "wireDateLabel": "Ngày chuyển tiền",
+    "wireAmountLabel": "Số tiền nạp",
     "wireAmountUsdLabel": "Số tiền nạp (USD)",
     "wireAmountVndLabel": "Số tiền nạp (VND)",
     "wireConfirmationLabel": "Ảnh chứng từ xác nhận chuyển tiền",
+    "uploadLabel": "Ảnh chứng từ xác nhận chuyển tiền",
+    "uploadNote": "(Tải lên tối đa 10 ảnh, dung lượng mỗi ảnh không quá 5MB)",
+    "uploadButton": "Tải ảnh lên",
+    "wireDateRequired": "Vui lòng chọn ngày chuyển tiền.",
+    "wireAmountRequired": "Vui lòng nhập số tiền nạp.",
+    "uploadRequired": "Vui lòng tải lên ít nhất 1 ảnh chứng từ xác nhận chuyển tiền.",
     "copySuccess": "Đã sao chép vào bộ nhớ tạm!",
     "dragAndDrop": "Kéo & thả hoặc",
     "browse": "Tải ảnh lên",
@@ -98,7 +105,10 @@
     "maxSizeError": "Kích thước mỗi ảnh không được vượt quá 5MB",
     "maxFilesError": "Bạn chỉ được tải lên tối đa 10 ảnh",
     "back": "Quay lại",
-    "submit": "Xác nhận gửi"
+    "submit": "Xác nhận gửi",
+    "submitting": "Đang xử lý...",
+    "createSuccess": "Tạo yêu cầu nạp tiền thành công!",
+    "createError": "Tạo yêu cầu nạp tiền thất bại!"
   },
   "table": {
     "no": "No.",
@@ -126,9 +136,6 @@
   "history": "Lịch sử nạp tiền",
   "searchPlaceholder": "Tìm kiếm giao dịch nạp tiền...",
   "status": {
-    "completed": "Hoàn thành",
-    "pending": "Chờ xác nhận",
-    "failed": "Thất bại",
     "waiting": "Chờ xác nhận",
     "confirm": "Đã xác nhận",
     "reject": "Từ chối"

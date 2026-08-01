@@ -1,5 +1,5 @@
-const PostPolicy: any = {};
-const getPostService = () => ({}) as any;
+import { PostPolicy } from "@ecom/features/blog/policies/PostPolicy";
+import { getPostService } from "@ecom/features/di/containers/BlogService";
 import { TRPCError } from "@trpc/server";
 import { middleware } from "../init";
 

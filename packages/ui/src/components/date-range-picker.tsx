@@ -43,6 +43,7 @@ function DateRangePicker({
   onClear,
   placeholder = "dd/mm/yyyy — dd/mm/yyyy",
   disabled,
+  disableFuture,
   className,
 }: DateRangePickerProps) {
   const [open, setOpen] = React.useState(false);
@@ -174,6 +175,7 @@ function DateRangePicker({
           captionLayout="dropdown"
           selected={localRange}
           onDayClick={handleDayClick}
+          disabled={disableFuture ? { after: new Date() } : undefined}
           numberOfMonths={2}
           autoFocus
         />

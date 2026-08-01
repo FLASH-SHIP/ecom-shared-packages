@@ -87,9 +87,16 @@
     "exchangeRateValue": "25.000 VND = 1 USD",
     "exchangeRateNote": "(The exchange rate may change over time)",
     "wireDateLabel": "Wire date",
+    "wireAmountLabel": "Wire amount",
     "wireAmountUsdLabel": "Wire amount (USD)",
     "wireAmountVndLabel": "Wire amount (VND)",
     "wireConfirmationLabel": "Wire transfer confirmation",
+    "uploadLabel": "Wire transfer confirmation image",
+    "uploadNote": "(Maximum 10 images, each image not exceeding 5MB)",
+    "uploadButton": "Upload file",
+    "wireDateRequired": "Please select wire date.",
+    "wireAmountRequired": "Please enter wire amount.",
+    "uploadRequired": "Please upload at least 1 wire transfer confirmation image.",
     "copySuccess": "Copied to clipboard!",
     "dragAndDrop": "Drag & drop or",
     "browse": "Browse",
@@ -98,7 +105,10 @@
     "maxSizeError": "Each image must not exceed 5MB",
     "maxFilesError": "You can upload up to 10 images",
     "back": "Back",
-    "submit": "Submit"
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "createSuccess": "Top-up request created successfully!",
+    "createError": "Failed to create top-up request!"
   },
   "table": {
     "no": "No.",
@@ -126,9 +136,6 @@
   "history": "Top-up History",
   "searchPlaceholder": "Search top-up requests...",
   "status": {
-    "completed": "Completed",
-    "pending": "Pending Confirmation",
-    "failed": "Failed",
     "waiting": "Waiting",
     "confirm": "Confirmed",
     "reject": "Rejected"

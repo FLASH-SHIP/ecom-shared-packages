@@ -30,6 +30,7 @@ import enSystem from "../locales/en/system.json";
 import enSystemInfo from "../locales/en/system-info.json";
 import enTags from "../locales/en/tags.json";
 import enTools from "../locales/en/tools.json";
+import enTopup from "../locales/en/topup.json";
 import enUsers from "../locales/en/users.json";
 import enWebhooks from "../locales/en/webhooks.json";
 
@@ -65,6 +66,7 @@ import viSystem from "../locales/vi/system.json";
 import viSystemInfo from "../locales/vi/system-info.json";
 import viTags from "../locales/vi/tags.json";
 import viTools from "../locales/vi/tools.json";
+import viTopup from "../locales/vi/topup.json";
 import viUsers from "../locales/vi/users.json";
 import viWebhooks from "../locales/vi/webhooks.json";
 
@@ -103,6 +105,7 @@ const messages = {
     system: enSystem,
     tags: enTags,
     tools: enTools,
+    topup: enTopup,
     users: enUsers,
     webhooks: enWebhooks,
   },
@@ -140,6 +143,7 @@ const messages = {
     system: viSystem,
     tags: viTags,
     tools: viTools,
+    topup: viTopup,
     users: viUsers,
     webhooks: viWebhooks,
   },

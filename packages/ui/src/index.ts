@@ -42,6 +42,7 @@ export * from "./components/icons";
 export * from "./components/PhoneInput";
 export * from "./components/language-switcher";
 export * from "./components/modals/base-modal";
+export * from "./components/modals/image-preview-modal";
 
 // Icons
 export * from "./components/icon-component/AppleIcon";

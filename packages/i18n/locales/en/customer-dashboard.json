@@ -16,8 +16,11 @@
   "login": "Sign In",
   "overview": "Overview",
   "changePassword": "Change password",
-  "logout": "Logout",
+  "logout": "Log out",
   "customer": "Customer",
+  "createSingleOrder": "Create Single Order",
+  "importOrderFile": "Import Order File",
+  "topup": "Top-up",
   "sidebar": {
     "general": "GENERAL",
     "orderInformation": "ORDER INFORMATION",
