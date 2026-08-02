@@ -171,5 +171,12 @@
     "waiting": "Chờ xác nhận",
     "confirm": "Đã xác nhận",
     "reject": "Từ chối"
+  },
+  "payOrder": {
+    "insufficientBalance": "Số dư ví khả dụng không đủ để thanh toán đơn hàng này. Vui lòng nạp thêm tiền vào ví.",
+    "invalidAmount": "Số tiền thanh toán đơn hàng phải lớn hơn 0.",
+    "invalidOrder": "Vui lòng cung cấp đầy đủ thông tin đơn hàng (orderId, orderCode).",
+    "alreadyPaid": "Đơn hàng #{orderCode} đã được thanh toán trước đó.",
+    "processing": "Đơn hàng #{orderCode} đang trong quá trình xử lý thanh toán, vui lòng chờ trong giây lát."
   }
 }
