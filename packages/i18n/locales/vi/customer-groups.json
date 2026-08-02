@@ -56,6 +56,11 @@
   },
   "validation": {
     "nameRequired": "Tên nhóm không được để trống",
-    "codeRequired": "Mã nhóm không được để trống"
+    "nameMinLength": "Tên nhóm phải có từ {min} ký tự trở lên",
+    "nameMaxLength": "Tên nhóm không được vượt quá {max} ký tự",
+    "codeRequired": "Mã nhóm không được để trống",
+    "codeMinLength": "Mã nhóm phải có từ {min} ký tự trở lên",
+    "codeMaxLength": "Mã nhóm không được vượt quá {max} ký tự",
+    "descriptionMaxLength": "Mô tả không được vượt quá {max} ký tự"
   }
 }

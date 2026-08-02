@@ -171,6 +171,8 @@
     "sellerOrderIdRequired": "Vui lòng nhập Order ID.",
     "senderNameRequired": "Vui lòng nhập tên người gửi.",
     "senderPhoneRequired": "Vui lòng nhập số điện thoại người gửi.",
+    "senderPhoneInvalid": "Số điện thoại người gửi chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự.",
+    "receiverPhoneInvalid": "Số điện thoại người nhận chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự.",
     "senderEmailInvalid": "Email người gửi không hợp lệ.",
     "senderAddressRequired": "Vui lòng nhập địa chỉ người gửi.",
     "senderCityRequired": "Vui lòng chọn tỉnh/thành phố người gửi.",
