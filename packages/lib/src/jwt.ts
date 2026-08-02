@@ -13,7 +13,9 @@ function getCustomerJwtSecret(): string {
   const secret = process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("CRITICAL: JWT_SECRET or AUTH_SECRET environment variable is required in production");
+      throw new Error(
+        "CRITICAL: JWT_SECRET or AUTH_SECRET environment variable is required in production",
+      );
     }
     return "dev-jwt-secret-do-not-use-in-production";
   }
@@ -46,7 +48,9 @@ function getJwtAdminSecret(): string {
   const secret = process.env.JWT_ADMIN_SECRET || process.env.JWT_SECRET || process.env.AUTH_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("CRITICAL: JWT_ADMIN_SECRET or AUTH_SECRET environment variable is required in production");
+      throw new Error(
+        "CRITICAL: JWT_ADMIN_SECRET or AUTH_SECRET environment variable is required in production",
+      );
     }
     return "dev-jwt-secret-do-not-use-in-production";
   }

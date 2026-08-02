@@ -62,12 +62,19 @@
   },
   "validation": {
     "nameRequired": "Vui lòng nhập họ và tên",
+    "nameMax": "Họ và tên không được vượt quá 200 ký tự",
     "emailRequired": "Vui lòng nhập email",
     "emailInvalid": "Email không hợp lệ",
     "passwordRequired": "Vui lòng nhập mật khẩu",
     "passwordMin": "Mật khẩu phải có ít nhất 8 ký tự",
+    "passwordMax": "Mật khẩu không được vượt quá 100 ký tự",
     "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
-    "passwordMismatch": "Mật khẩu xác nhận không khớp"
+    "passwordMismatch": "Mật khẩu xác nhận không khớp",
+    "phoneInvalid": "Số điện thoại không đúng định dạng",
+    "phoneMax": "Số điện thoại không được vượt quá 20 ký tự",
+    "usernameInvalid": "Tên đăng nhập từ 3-30 ký tự (chữ cái thường, số, '.', '_')",
+    "usernameMax": "Tên đăng nhập không được vượt quá 30 ký tự",
+    "descriptionMax": "Ghi chú không được vượt quá 1000 ký tự"
   },
   "detail": {
     "title": "Chi tiết khách hàng",

@@ -1,12 +1,19 @@
-export type { PostalCodeRule } from "./addressValidator";
+export type { PostalCodeRule, PostalCodeValidationResult } from "./addressValidator";
 export {
+  COUNTRY_ISO_MAP,
   COUNTRY_POSTAL_CODE_RULES,
+  formatPostalCode,
   getPostalCodeRuleInfo,
+  isNoZipcodeCountry,
+  NO_ZIPCODE_COUNTRIES,
+  normalizeCountryCode,
+  validateAndFormatPostalCode,
   validatePostalCode,
   validateReceiverEmail,
   validateReceiverName,
   validateReceiverPhone,
   validateReceiverState,
+  validateStateZipMatch,
 } from "./addressValidator";
 export * from "./api-response";
 export * from "./batch";
@@ -18,10 +25,10 @@ export {
 } from "./codeGenerator";
 export * from "./crypto";
 export { parseDateTimezone } from "./date";
+export * from "./diagnosticsBypass";
 export type { ErrorCodeType } from "./errorCodes";
 export { ErrorCode } from "./errorCodes";
 export { ErrorWithCode } from "./errors";
 export { createLogger, getLogLevel, loggerContext, maskSensitiveData, setLogLevel } from "./logger";
 export type { PaginatedResult, PaginationMeta } from "./pagination";
 export { BaseTransformer } from "./transformers/BaseTransformer";
-export * from "./diagnosticsBypass";

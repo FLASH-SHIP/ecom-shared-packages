@@ -62,12 +62,19 @@
   },
   "validation": {
     "nameRequired": "Full name is required",
+    "nameMax": "Full name cannot exceed 200 characters",
     "emailRequired": "Email is required",
     "emailInvalid": "Please enter a valid email address",
     "passwordRequired": "Password is required",
     "passwordMin": "Password must be at least 8 characters",
+    "passwordMax": "Password cannot exceed 100 characters",
     "confirmPasswordRequired": "Please confirm your password",
-    "passwordMismatch": "Passwords do not match"
+    "passwordMismatch": "Passwords do not match",
+    "phoneInvalid": "Invalid phone number format",
+    "phoneMax": "Phone number cannot exceed 20 characters",
+    "usernameInvalid": "Username must be 3-30 characters (lowercase, numbers, '.', '_')",
+    "usernameMax": "Username cannot exceed 30 characters",
+    "descriptionMax": "Description cannot exceed 1000 characters"
   },
   "detail": {
     "title": "Customer Detail",
