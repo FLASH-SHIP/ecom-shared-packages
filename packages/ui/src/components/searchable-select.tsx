@@ -1,11 +1,10 @@
 "use client";
 
+import { Check, ChevronsUpDown, Search, X } from "lucide-react";
+import * as React from "react";
+import { cn } from "../lib/utils";
 import { Button } from "./button";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
-
-import { cn } from "../lib/utils";
-import { Check, ChevronsUpDown, Loader2, Search, X } from "lucide-react";
-import * as React from "react";
 
 interface SearchableSelectOption {
   value: string;
@@ -13,6 +12,7 @@ interface SearchableSelectOption {
   icon?: string;
   image?: string | null;
   separatorAfter?: boolean;
+  disabled?: boolean;
 }
 
 interface SearchableSelectProps {
@@ -157,9 +157,13 @@ function SearchableSelect({
                 <button
                   type="button"
                   title={opt.label}
-                  onClick={() => handleSelect(opt.value)}
+                  disabled={opt.disabled}
+                  onClick={() => !opt.disabled && handleSelect(opt.value)}
                   className={cn(
-                    "flex w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground",
+                    "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors",
+                    opt.disabled
+                      ? "opacity-45 cursor-not-allowed text-muted-foreground bg-muted/20"
+                      : "cursor-pointer hover:bg-accent hover:text-accent-foreground",
                     value === opt.value && "font-medium",
                   )}
                 >

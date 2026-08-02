@@ -189,4 +189,48 @@ export type RateCardType = "DEFAULT" | "CUSTOM" | "STANDARD" | "SPECIAL" | "PROM
 
 export type ContentStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED" | "PENDING" | "REVIEW" | "REJECTED";
 
+/**
+ * Shared phone number validation regex for all apps (backend & frontend):
+ * - Optional '+' at the start
+ * - Followed by 9 to 15 digits (0-9)
+ */
+export const PHONE_REGEX = /^\+?[0-9]{9,15}$/;
+
+/**
+ * Standardized Vietnamese validation error messages for phone numbers.
+ */
+export const PHONE_VALIDATION_MESSAGES = {
+  SENDER: "Số điện thoại người gửi chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự.",
+  RECEIVER: "Số điện thoại người nhận chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự.",
+} as const;
+
+/**
+ * Whitelist of supported sender country codes (ISO 2-letter).
+ * Easily expandable in the future (e.g. ['VN', 'US', 'TH']).
+ */
+export const ALLOWED_SENDER_COUNTRIES = ["VN"] as const;
+export type AllowedSenderCountry = (typeof ALLOWED_SENDER_COUNTRIES)[number];
+
+export const SENDER_COUNTRY_VALIDATION_MESSAGE = "Quốc gia người gửi (senderCountry) chưa được hỗ trợ";
+
+export function isAllowedSenderCountry(country?: string | null): country is AllowedSenderCountry {
+  if (!country) return false;
+  return (ALLOWED_SENDER_COUNTRIES as readonly string[]).includes(country.toUpperCase().trim());
+}
+
+/**
+ * Shared limits for order parcel dimensions & weight in logistics.
+ */
+export const MAX_DECLARED_WEIGHT_GRAMS = 70000; // 70 kg
+export const MAX_DIMENSION_CM = 300; // 300 cm
+
+export const PARCEL_VALIDATION_MESSAGES = {
+  WEIGHT_MAX: "Trọng lượng khai báo (declaredWeight) không được vượt quá 70,000 grams (70kg)",
+  LENGTH_MAX: "Chiều dài (dimensionLength) không được vượt quá 300 cm",
+  WIDTH_MAX: "Chiều rộng (dimensionWidth) không được vượt quá 300 cm",
+  HEIGHT_MAX: "Chiều cao (dimensionHeight) không được vượt quá 300 cm",
+  EMAIL_SENDER_INVALID: "Email người gửi (senderEmail) không đúng định dạng email",
+  EMAIL_RECEIVER_INVALID: "Email người nhận (receiverEmail) không đúng định dạng email",
+} as const;
+
 

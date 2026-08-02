@@ -56,6 +56,11 @@
   },
   "validation": {
     "nameRequired": "Group name is required",
-    "codeRequired": "Group code is required"
+    "nameMinLength": "Group name must be at least {min} characters",
+    "nameMaxLength": "Group name cannot exceed {max} characters",
+    "codeRequired": "Group code is required",
+    "codeMinLength": "Group code must be at least {min} characters",
+    "codeMaxLength": "Group code cannot exceed {max} characters",
+    "descriptionMaxLength": "Description cannot exceed {max} characters"
   }
 }

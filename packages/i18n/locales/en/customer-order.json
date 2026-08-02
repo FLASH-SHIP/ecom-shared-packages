@@ -171,6 +171,8 @@
     "sellerOrderIdRequired": "Please enter Order ID.",
     "senderNameRequired": "Please enter sender name.",
     "senderPhoneRequired": "Please enter sender phone number.",
+    "senderPhoneInvalid": "Sender phone number must contain only digits, optional leading +, and be 9-15 characters.",
+    "receiverPhoneInvalid": "Receiver phone number must contain only digits, optional leading +, and be 9-15 characters.",
     "senderEmailInvalid": "Invalid sender email address.",
     "senderAddressRequired": "Please enter sender address.",
     "senderCityRequired": "Please select sender city/province.",

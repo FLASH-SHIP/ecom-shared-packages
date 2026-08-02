@@ -70,6 +70,8 @@
     "noFilters": "No filters yet. Click \"Add filter\" to get started.",
     "removeFilter": "Remove filter",
     "clearAll": "Clear all filters",
+    "alreadySelected": "(Already selected)",
+    "allFieldsUsed": "All filter fields selected",
     "operators": {
       "equals": "Equals",
       "notEquals": "Not equals",

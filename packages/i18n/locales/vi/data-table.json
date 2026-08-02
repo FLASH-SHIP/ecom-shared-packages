@@ -70,6 +70,8 @@
     "noFilters": "Chưa có bộ lọc nào. Nhấn \"Thêm bộ lọc\" để bắt đầu.",
     "removeFilter": "Xoá bộ lọc",
     "clearAll": "Xoá tất cả bộ lọc",
+    "alreadySelected": "(Đã chọn)",
+    "allFieldsUsed": "Đã chọn tất cả các trường lọc",
     "operators": {
       "equals": "Bằng với",
       "notEquals": "Khác với",
