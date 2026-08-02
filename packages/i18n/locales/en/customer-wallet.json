@@ -171,5 +171,12 @@
     "waiting": "Waiting",
     "confirm": "Confirmed",
     "reject": "Rejected"
+  },
+  "payOrder": {
+    "insufficientBalance": "Insufficient wallet balance to pay for this order. Please top up your wallet.",
+    "invalidAmount": "Order payment amount must be greater than 0.",
+    "invalidOrder": "Please provide complete order identification (orderId, orderCode).",
+    "alreadyPaid": "Order #{orderCode} has already been paid previously.",
+    "processing": "Order #{orderCode} is currently being processed for payment. Please wait."
   }
 }
