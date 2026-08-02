@@ -174,6 +174,8 @@ export const exportExcel = authedProcedure
   .input(
     z
       .object({
+        page: z.number().int().positive().optional().default(1),
+        pageSize: z.number().int().positive().optional().default(10),
         search: z.string().optional(),
         paymentMethodId: z.number().int().positive().optional(),
         status: z.string().optional(),
@@ -192,8 +194,8 @@ export const exportExcel = authedProcedure
 
     const historyResult = await getTopupTransactionService().getTopupHistory({
       customerId: targetCustomerId,
-      page: 1,
-      pageSize: 5000,
+      page: input?.page ?? 1,
+      pageSize: input?.pageSize ?? 10,
       search: input?.search,
       paymentMethodId: input?.paymentMethodId,
       status: input?.status,
@@ -368,4 +370,29 @@ export const payOrderWithWallet = authedProcedure
       actorId: ctx.user.id,
       description: input.description,
     });
+  });
+
+export const exportTransactionExcel = authedProcedure
+  .input(
+    z
+      .object({
+        page: z.number().int().positive().optional().default(1),
+        pageSize: z.number().int().positive().optional().default(10),
+        search: z.string().optional(),
+        topupType: z.string().optional(),
+        status: z.number().int().optional().default(TopupStatus.CONFIRMED),
+        dateFrom: z.string().optional(),
+        dateTo: z.string().optional(),
+        customerId: z.string().optional(),
+        sortBy: z.string().optional().default("updatedAt"),
+        sortOrder: z.enum(["asc", "desc"]).optional().default("desc"),
+        locale: z.string().optional(),
+      })
+      .optional(),
+  )
+  .mutation(async ({ ctx, input }) => {
+    return {
+      filename: "Wallet_Transactions.xlsx",
+      fileData: "",
+    };
   });
