@@ -28,6 +28,8 @@
     "enterPostcodeZipcode": "Enter postcode/zipcode",
     "enterAddress1": "Enter address 1",
     "enterAddress2": "Enter address 2",
+    "enterState": "Enter state",
+    "enterCity": "Enter city",
     "selectUsState": "Select US State",
     "selectStateFirst": "Select State first",
     "enterReceiverName": "Enter receiver name",

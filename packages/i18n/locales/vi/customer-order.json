@@ -28,6 +28,8 @@
     "enterPostcodeZipcode": "Nhập mã bưu điện/zipcode",
     "enterAddress1": "Nhập địa chỉ 1",
     "enterAddress2": "Nhập địa chỉ 2",
+    "enterState": "Nhập bang/tỉnh",
+    "enterCity": "Nhập thành phố",
     "selectUsState": "Chọn bang Mỹ",
     "selectStateFirst": "Chọn bang trước",
     "enterReceiverName": "Nhập tên người nhận",
