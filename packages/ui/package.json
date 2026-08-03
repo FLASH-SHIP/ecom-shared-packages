@@ -8,6 +8,8 @@
     "./domain": "./src/domain/index.ts",
     "./components/*": "./src/components/*.tsx",
     "./lib/utils": "./src/lib/utils.ts",
+    "./tokens": "./src/tokens/index.ts",
+    "./tokens.json": "./src/tokens/tokens.json",
     "./styles.css": "./src/styles.css"
   },
   "sideEffects": [
@@ -16,6 +18,8 @@
   "scripts": {
     "build": "tsc",
     "type-check": "tsc --noEmit",
+    "tokens:build": "npx ts-node scripts/sync-tokens.ts",
+    "tokens:validate": "npx ts-node scripts/sync-tokens.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "clean": "rm -rf dist"
