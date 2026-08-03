@@ -443,17 +443,67 @@ export function validateReceiverName(name: string): { valid: boolean; message?: 
 }
 
 /**
- * Validate Receiver Phone: Optional, max 15 chars.
+ * Shared Phone Number Validator for both Sender and Receiver.
+ * Validates international phone numbers (digits 0-9, optional leading +, spaces, hyphens, parentheses).
+ * Digit count must be between 9 and 15 digits.
  */
-export function validateReceiverPhone(phone?: string | null): { valid: boolean; message?: string } {
+export function validatePhone(
+  phone?: string | null,
+  isRequired = false,
+  locale?: string,
+): { valid: boolean; message?: string } {
   if (!phone || phone.trim() === "") {
+    if (isRequired) {
+      return {
+        valid: false,
+        message: translate("customerOrder.validation.senderPhoneRequired", locale) || "Vui lòng nhập số điện thoại",
+      };
+    }
     return { valid: true };
   }
+
   const cleanPhone = phone.trim();
-  if (cleanPhone.length > 15) {
-    return { valid: false, message: "Số điện thoại không được vượt quá 15 ký tự" };
+  const validCharRegex = /^\+?[0-9\s()-]+$/;
+  if (!validCharRegex.test(cleanPhone)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.senderPhoneInvalid", locale) ||
+        "Số điện thoại chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự",
+    };
   }
+
+  const digitCount = cleanPhone.replace(/\D/g, "").length;
+  if (digitCount < 9 || digitCount > 15) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.senderPhoneInvalid", locale) ||
+        "Số điện thoại phải từ 9 đến 15 chữ số",
+    };
+  }
+
   return { valid: true };
+}
+
+/**
+ * Sender Phone Validation (Required by default, uses shared validatePhone)
+ */
+export function validateSenderPhone(
+  phone?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  return validatePhone(phone, true, locale);
+}
+
+/**
+ * Receiver Phone Validation (Optional by default, uses shared validatePhone)
+ */
+export function validateReceiverPhone(
+  phone?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  return validatePhone(phone, false, locale);
 }
 
 /**
