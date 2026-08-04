@@ -1,20 +1,4 @@
-export type { PostalCodeRule, PostalCodeValidationResult } from "./addressValidator";
-export {
-  COUNTRY_ISO_MAP,
-  COUNTRY_POSTAL_CODE_RULES,
-  formatPostalCode,
-  getPostalCodeRuleInfo,
-  isNoZipcodeCountry,
-  NO_ZIPCODE_COUNTRIES,
-  normalizeCountryCode,
-  validateAndFormatPostalCode,
-  validatePostalCode,
-  validateReceiverEmail,
-  validateReceiverName,
-  validateReceiverPhone,
-  validateReceiverState,
-  validateStateZipMatch,
-} from "./addressValidator";
+export * from "./addressValidator";
 export * from "./api-response";
 export * from "./batch";
 export {

@@ -168,10 +168,12 @@
   },
   "validation": {
     "detailDescriptionRequired": "Vui lòng nhập mô tả hàng hóa.",
+    "shippingMethodRequired": "Vui lòng chọn phương thức vận chuyển.",
     "declaredValueRequired": "Vui lòng nhập giá trị hàng hóa.",
     "declaredValueMin": "Trị giá hàng hóa phải lớn hơn 0.",
     "sellerOrderIdRequired": "Vui lòng nhập Order ID.",
     "senderNameRequired": "Vui lòng nhập tên người gửi.",
+    "senderNameMax": "Tên người gửi không được vượt quá 100 ký tự.",
     "senderPhoneRequired": "Vui lòng nhập số điện thoại người gửi.",
     "senderPhoneInvalid": "Số điện thoại người gửi chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự.",
     "receiverPhoneInvalid": "Số điện thoại người nhận chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự.",
@@ -198,6 +200,7 @@
     "packingTypeIdRequired": "Vui lòng chọn loại đóng gói.",
     "packageWeightRequired": "Vui lòng nhập cân nặng gói hàng.",
     "packageWeightMin": "Cân nặng gói hàng phải lớn hơn 0.",
+    "packageWeightIntegerOnly": "Cân nặng gói hàng chỉ được nhập số nguyên (0-9).",
     "packageNameRequired": "Vui lòng nhập tên gói hàng.",
     "productsMin": "Vui lòng khai báo ít nhất 1 sản phẩm.",
     "productDescriptionRequired": "Vui lòng nhập mô tả sản phẩm.",
@@ -210,6 +213,20 @@
     "checkRequiredFields": "Vui lòng kiểm tra và điền đầy đủ thông tin các trường bắt buộc.",
     "calculateFreightFailed": "Không thể tính toán cước phí. Vui lòng kiểm tra lại bảng giá.",
     "createOrderFailed": "Tạo đơn hàng thất bại. Vui lòng thử lại.",
-    "createOrderSuccess": "Tạo đơn hàng thành công"
+    "createOrderSuccess": "Tạo đơn hàng thành công",
+    "detailDescriptionMax200": "Mô tả hàng hóa không được vượt quá 200 ký tự.",
+    "sellerOrderIdMax50": "Mã đơn hàng không được vượt quá 50 ký tự.",
+    "receiverAddress1Max50": "Địa chỉ 1 không được vượt quá 50 ký tự ASCII/Latin.",
+    "receiverAddress2Max50": "Địa chỉ 2 không được vượt quá 50 ký tự ASCII/Latin.",
+    "receiverCityMax50": "Thành phố không được vượt quá 50 ký tự.",
+    "addressAsciiOnly": "Địa chỉ chỉ được chứa ký tự ASCII/Latin không dấu.",
+    "cityAsciiOnly": "Thành phố chỉ được chứa ký tự ASCII/Latin không dấu.",
+    "descriptionAsciiOnly": "Mô tả hàng hóa phải là Tiếng Anh / Ký tự Latin không dấu.",
+    "noPoBox": "Hệ thống không hỗ trợ giao hàng đến hộp thư P.O. Box / APO / FPO.",
+    "hsCodeRequired": "Vui lòng nhập mã HS Code.",
+    "hsCodeInvalidFormat": "Mã HS Code phải gồm từ 6 đến 10 chữ số.",
+    "stateZipMismatch": "Mã bưu chính {zip} không khớp với Bang {state} tại Hoa Kỳ (US)",
+    "dimensionsInvalidFormat": "Kích thước phải dạng DàixRộngxCao (VD: 60x40x20 hoặc 60,5x40x20)",
+    "dimensionsMin": "Cả 3 chiều chiều dài, rộng, cao đều phải là số thực lớn hơn 0"
   }
 }
