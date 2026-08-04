@@ -41,3 +41,5 @@ logs/
 .env*.local
 .env
 
+
+.idea/

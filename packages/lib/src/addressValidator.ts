@@ -1,4 +1,5 @@
 import { translate } from "@flash-ship/ecom-i18n";
+import { PHONE_REGEX } from "@flash-ship/ecom-types";
 
 export interface PostalCodeRule {
   regex: RegExp;
@@ -309,6 +310,7 @@ export function validatePostalCode(
 export function validateAndFormatPostalCode(
   countryInput?: string | null,
   zipCodeInput?: string | null,
+  locale?: string,
 ): PostalCodeValidationResult {
   const iso2 = normalizeCountryCode(countryInput);
   const valid = validatePostalCode(iso2, zipCodeInput);
@@ -318,9 +320,13 @@ export function validateAndFormatPostalCode(
   let message: string | undefined;
   if (!valid) {
     if (ruleInfo) {
-      message = `Mã bưu chính không đúng định dạng cho quốc gia ${iso2}. ${ruleInfo.description}`;
+      message =
+        translate("customerOrder.validation.zipCodeInvalidFormat", locale, { country: iso2 }) ||
+        `Mã bưu chính không đúng định dạng cho quốc gia ${iso2}. ${ruleInfo.description}`;
     } else {
-      message = `Mã bưu chính không đúng định dạng cho quốc gia ${iso2} (yêu cầu từ 3-10 ký tự)`;
+      message =
+        translate("customerOrder.validation.zipCodeInvalidFormat", locale, { country: iso2 }) ||
+        `Mã bưu chính không đúng định dạng cho quốc gia ${iso2} (yêu cầu từ 3-10 ký tự)`;
     }
   }
 
@@ -355,6 +361,7 @@ export function validateStateZipMatch(
   countryInput?: string | null,
   stateInput?: string | null,
   zipCodeInput?: string | null,
+  locale?: string,
 ): { match: boolean; message?: string } {
   const iso2 = normalizeCountryCode(countryInput);
   const state = (stateInput || "").trim().toUpperCase();
@@ -377,7 +384,9 @@ export function validateStateZipMatch(
       if (!allowedPrefixes.includes(zipPrefix2)) {
         return {
           match: false,
-          message: `Mã bưu chính ${zip} không khớp với Bang ${state} tại Hoa Kỳ (US)`,
+          message:
+            translate("customerOrder.validation.stateZipMismatch", locale, { zip, state }) ||
+            `Mã bưu chính ${zip} không khớp với Bang ${state} tại Hoa Kỳ (US)`,
         };
       }
     }
@@ -387,36 +396,138 @@ export function validateStateZipMatch(
 }
 
 /**
- * Validate State format according to Country.
- * US: Exactly 2 uppercase letters (e.g. CA, NY, WA)
- * Other countries: Max 50 characters
+ * Validate Receiver Name: Required, max 100 chars, no special characters.
+ * Allows letters, numbers, spaces, Vietnamese/accented characters, hyphens, apostrophes, dots.
  */
-export function validateReceiverState(
-  countryCode: string,
-  state: string,
+export function validateReceiverName(
+  name: string,
   locale?: string,
 ): { valid: boolean; message?: string } {
-  if (!state || state.trim() === "") {
+  if (!name || name.trim() === "") {
     return {
       valid: false,
-      message: translate("customerOrder.validation.receiverStateRequired", locale),
+      message: translate("customerOrder.validation.receiverNameRequired", locale) || "Vui lòng nhập tên người nhận",
     };
   }
-  const cleanCountry = normalizeCountryCode(countryCode);
-  const cleanState = state.trim();
+  const cleanName = name.trim();
+  if (cleanName.length > 100) {
+    return {
+      valid: false,
+      message: translate("customerOrder.validation.receiverNameMax", locale) || "Tên người nhận không được vượt quá 100 ký tự",
+    };
+  }
+  const validPattern = /^[a-zA-Z0-9\s\u00C0-\u024F\u1EA0-\u1EF9'.-]+$/;
+  if (!validPattern.test(cleanName)) {
+    return {
+      valid: false,
+      message: translate("customerOrder.validation.receiverNameInvalid", locale) || "Tên người nhận không được chứa ký tự đặc biệt",
+    };
+  }
+  return { valid: true };
+}
 
-  if (cleanCountry === "US") {
-    if (!/^[A-Z]{2}$/.test(cleanState.toUpperCase())) {
+/**
+ * Set of countries that require 2-letter uppercase ISO/ANSI State codes.
+ */
+export const ISO2_2CHAR_STATE_COUNTRIES: ReadonlySet<string> = new Set([
+  "US",
+  "CA",
+  "AU",
+  "BR",
+  "MX",
+  "IN",
+  "IT",
+]);
+
+/**
+ * Set of countries that do not use State/Province or where State is optional.
+ */
+export const NO_STATE_COUNTRIES: ReadonlySet<string> = new Set([
+  "SG",
+  "HK",
+  "MO",
+  "AE",
+  "QA",
+  "BH",
+  "KW",
+  "OM",
+  "BS",
+  "JM",
+  "GH",
+  "UG",
+  "ZW",
+  "VN",
+  "TH",
+  "PH",
+  "ID",
+  "MY",
+]);
+
+/**
+ * Kiểm tra chuỗi chỉ chứa ký tự ASCII / Latin hiển thị được (không chứa tiếng Việt có dấu hoặc Emoji).
+ */
+export function isAsciiLatinOnly(str: string): boolean {
+  return /^[\x20-\x7E]*$/.test(str);
+}
+
+/**
+ * Kiểm tra xem địa chỉ có phải là Hộp thư P.O. Box / APO / FPO / DPO hay không.
+ */
+export function isPoBoxAddress(address: string): boolean {
+  if (!address) return false;
+  return /\b(P\.?\s*O\.?\s*BOX|A\.?\s*P\.?\s*O|F\.?\s*P\.?\s*O)\b/i.test(address);
+}
+
+/**
+ * Kiểm tra địa chỉ có chứa cả số nhà và tên đường hay không.
+ */
+export function containsHouseNumberAndStreet(address: string): boolean {
+  if (!address) return false;
+  const clean = address.trim();
+  // Chứa ít nhất 1 chữ số và 1 chữ cái
+  return /\d/.test(clean) && /[a-zA-Z]/.test(clean);
+}
+
+/**
+ * Bộ kiểm tra Bang/Tỉnh người nhận nâng cao (Master State Engine).
+ * Áp dụng quy tắc mã 2 ký tự (US, CA, AU...), miễn trừ cho quốc gia không có Bang (SG, HK, AE...), và giới hạn 50 ký tự.
+ */
+export function validateReceiverState(
+  countryCode?: string | null,
+  state?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  const cleanCountry = normalizeCountryCode(countryCode);
+  const cleanState = (state || "").trim();
+
+  // Nếu quốc gia nằm trong danh sách không có Bang, tự động bỏ qua kiểm tra
+  if (NO_STATE_COUNTRIES.has(cleanCountry)) {
+    return { valid: true };
+  }
+
+  if (!cleanState) {
+    return {
+      valid: false,
+      message: translate("customerOrder.validation.receiverStateRequired", locale) || "Vui lòng nhập/chọn bang/tỉnh",
+    };
+  }
+
+  if (ISO2_2CHAR_STATE_COUNTRIES.has(cleanCountry)) {
+    if (!/^[A-Za-z]{2}$/.test(cleanState)) {
       return {
         valid: false,
-        message: translate("customerOrder.validation.receiverStateUsFormat", locale),
+        message:
+          translate("customerOrder.validation.receiverStateUsFormat", locale) ||
+          `Bang tại ${cleanCountry} phải là mã 2 ký tự viết hoa (VD: CA, NY, ON)`,
       };
     }
   } else {
     if (cleanState.length > 50) {
       return {
         valid: false,
-        message: translate("customerOrder.validation.receiverStateMax", locale),
+        message:
+          translate("customerOrder.validation.receiverStateMax", locale) ||
+          "State không được vượt quá 50 ký tự",
       };
     }
   }
@@ -424,49 +535,468 @@ export function validateReceiverState(
 }
 
 /**
- * Validate Receiver Name: Required, max 100 chars, no special characters.
- * Allows letters, numbers, spaces, Vietnamese/accented characters, hyphens, apostrophes, dots.
+ * Kiểm tra Địa chỉ 1 người nhận (Address 1):
+ * Bắt buộc nhập, tối đa 50 ký tự ASCII/Latin không dấu, chặn giao P.O. Box / APO / FPO.
  */
-export function validateReceiverName(name: string): { valid: boolean; message?: string } {
-  if (!name || name.trim() === "") {
-    return { valid: false, message: "Vui lòng nhập tên người nhận" };
+export function validateReceiverAddress1(
+  address?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  if (!address || address.trim() === "") {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.receiverAddress1Required", locale) ||
+        "Vui lòng nhập địa chỉ người nhận",
+    };
   }
-  const cleanName = name.trim();
-  if (cleanName.length > 100) {
-    return { valid: false, message: "Tên người nhận không được vượt quá 100 ký tự" };
+  const clean = address.trim();
+  if (clean.length > 50) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.receiverAddress1Max50", locale) ||
+        "Địa chỉ 1 không được vượt quá 50 ký tự ASCII/Latin",
+    };
   }
-  const validPattern = /^[a-zA-Z0-9\s\u00C0-\u024F\u1EA0-\u1EF9'.-]+$/;
-  if (!validPattern.test(cleanName)) {
-    return { valid: false, message: "Tên người nhận không được chứa ký tự đặc biệt" };
+  if (!isAsciiLatinOnly(clean)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.addressAsciiOnly", locale) ||
+        "Địa chỉ chỉ được chứa ký tự ASCII/Latin không dấu",
+    };
+  }
+  if (isPoBoxAddress(clean)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.noPoBox", locale) ||
+        "Hệ thống không hỗ trợ giao hàng đến hộp thư P.O. Box / APO / FPO",
+    };
   }
   return { valid: true };
 }
 
 /**
- * Validate Receiver Phone: Optional, max 15 chars.
+ * Kiểm tra Địa chỉ 2 người nhận (Address 2):
+ * Tùy chọn nhập, tối đa 50 ký tự ASCII/Latin không dấu.
  */
-export function validateReceiverPhone(phone?: string | null): { valid: boolean; message?: string } {
+export function validateReceiverAddress2(
+  address?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  if (!address || address.trim() === "") return { valid: true };
+  const clean = address.trim();
+  if (clean.length > 50) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.receiverAddress2Max50", locale) ||
+        "Địa chỉ 2 không được vượt quá 50 ký tự ASCII/Latin",
+    };
+  }
+  if (!isAsciiLatinOnly(clean)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.addressAsciiOnly", locale) ||
+        "Địa chỉ 2 chỉ được chứa ký tự ASCII/Latin không dấu",
+    };
+  }
+  return { valid: true };
+}
+
+/**
+ * Kiểm tra Thành phố người nhận (City):
+ * Bắt buộc nhập, tối đa 50 ký tự ASCII/Latin không dấu.
+ */
+export function validateReceiverCity(
+  city?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  if (!city || city.trim() === "") {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.receiverCityRequired", locale) ||
+        "Vui lòng nhập/chọn thành phố",
+    };
+  }
+  const clean = city.trim();
+  if (clean.length > 50) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.receiverCityMax50", locale) ||
+        "Thành phố không được vượt quá 50 ký tự",
+    };
+  }
+  if (!isAsciiLatinOnly(clean)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.cityAsciiOnly", locale) ||
+        "Thành phố chỉ được chứa ký tự ASCII/Latin không dấu",
+    };
+  }
+  return { valid: true };
+}
+
+/**
+ * Kiểm tra Mã đơn hàng người bán (Seller Order ID):
+ * Bắt buộc nhập, tối đa 50 ký tự.
+ */
+export function validateSellerOrderId(
+  sellerOrderId?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  if (!sellerOrderId || sellerOrderId.trim() === "") {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.sellerOrderIdRequired", locale) ||
+        "Vui lòng nhập Mã đơn hàng (Seller Order ID)",
+    };
+  }
+  const clean = sellerOrderId.trim();
+  if (clean.length > 50) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.sellerOrderIdMax50", locale) ||
+        "Mã đơn hàng không được vượt quá 50 ký tự",
+    };
+  }
+  return { valid: true };
+}
+
+/**
+ * Kiểm tra Mô tả chi tiết hàng hóa (Detail Description):
+ * Bắt buộc nhập, tối đa 200 ký tự Tiếng Anh / Latin không dấu.
+ */
+export function validateDetailDescription(
+  desc?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  if (!desc || desc.trim() === "") {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.detailDescriptionRequired", locale) ||
+        "Vui lòng nhập mô tả hàng hóa",
+    };
+  }
+  const clean = desc.trim();
+  if (clean.length > 200) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.detailDescriptionMax200", locale) ||
+        "Mô tả hàng hóa không được vượt quá 200 ký tự",
+    };
+  }
+  if (!isAsciiLatinOnly(clean)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.descriptionAsciiOnly", locale) ||
+        "Mô tả hàng hóa phải là Tiếng Anh / Ký tự Latin không dấu",
+    };
+  }
+  return { valid: true };
+}
+
+/**
+ * Kiểm tra định dạng Mã HS Code:
+ * Bắt buộc gồm từ 6 đến 10 chữ số.
+ */
+export function validateHSCodeFormat(
+  hsCode?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  if (!hsCode || hsCode.trim() === "") {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.hsCodeRequired", locale) ||
+        "Vui lòng nhập mã HS Code",
+    };
+  }
+  const clean = hsCode.trim().replace(/\D/g, "");
+  if (!/^\d{6,10}$/.test(clean)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.hsCodeInvalidFormat", locale) ||
+        "Mã HS Code phải gồm từ 6 đến 10 chữ số",
+    };
+  }
+  return { valid: true };
+}
+
+/**
+ * Phân tích & Kiểm tra Trọng lượng hàng hóa (gram):
+ * Hỗ trợ chuỗi nhập như "1360g", "1050G", "1.5kg" -> Trả về số nguyên gram > 0.
+ */
+export function parseAndValidateWeight(
+  input?: string | number | null,
+  locale?: string,
+): { valid: boolean; weightGrams: number | null; message?: string } {
+  if (input === undefined || input === null || String(input).trim() === "") {
+    return {
+      valid: false,
+      weightGrams: null,
+      message: translate("customerOrder.validation.packageWeightRequired", locale) || "Vui lòng nhập trọng lượng",
+    };
+  }
+  const raw = String(input).trim().replace(/g$/i, "");
+  if (!/^[0-9]+$/.test(raw)) {
+    return {
+      valid: false,
+      weightGrams: null,
+      message:
+        translate("customerOrder.validation.packageWeightIntegerOnly", locale) ||
+        "Cân nặng gói hàng chỉ được nhập số nguyên (0-9)",
+    };
+  }
+  const grams = parseInt(raw, 10);
+  if (Number.isNaN(grams) || grams <= 0) {
+    return {
+      valid: false,
+      weightGrams: null,
+      message: translate("customerOrder.validation.packageWeightMin", locale) || "Cân nặng gói hàng phải lớn hơn 0",
+    };
+  }
+  return { valid: true, weightGrams: grams };
+}
+
+/**
+ * Phân tích & Kiểm tra Kích thước kiện hàng (cm):
+ * Hỗ trợ các định dạng "60,5x60x1,5", "60*60*20" -> Phân tách thành { length, width, height } số thực > 0.
+ */
+export function parseAndValidateDimensions(
+  input?: string | null,
+  locale?: string,
+): { valid: boolean; length: number; width: number; height: number; message?: string } {
+  if (!input || input.trim() === "") {
+    return { valid: true, length: 0, width: 0, height: 0 };
+  }
+  const parts = input.trim().toLowerCase().split(/[x*X]/);
+  if (parts.length !== 3) {
+    return {
+      valid: false,
+      length: 0,
+      width: 0,
+      height: 0,
+      message:
+        translate("customerOrder.validation.dimensionsInvalidFormat", locale) ||
+        "Kích thước phải dạng DàixRộngxCao (VD: 60x40x20 hoặc 60,5x40x20)",
+    };
+  }
+
+  const p0 = parts[0] ?? "";
+  const p1 = parts[1] ?? "";
+  const p2 = parts[2] ?? "";
+  const l = parseFloat(p0.replace(",", ".").trim());
+  const w = parseFloat(p1.replace(",", ".").trim());
+  const h = parseFloat(p2.replace(",", ".").trim());
+
+  if (Number.isNaN(l) || Number.isNaN(w) || Number.isNaN(h) || l <= 0 || w <= 0 || h <= 0) {
+    return {
+      valid: false,
+      length: 0,
+      width: 0,
+      height: 0,
+      message:
+        translate("customerOrder.validation.dimensionsMin", locale) ||
+        "Cả 3 chiều chiều dài, rộng, cao đều phải là số thực lớn hơn 0",
+    };
+  }
+
+  return { valid: true, length: l, width: w, height: h };
+}
+
+/**
+ * Phân tích & Kiểm tra Giá trị khai báo USD:
+ * Tự động loại bỏ ký tự tiền tệ "$15" hoặc "15$" -> Trả về số thực >= 0.
+ */
+export function parseAndValidateValue(
+  input?: string | number | null,
+  locale?: string,
+): { valid: boolean; value: number | null; message?: string } {
+  if (input === undefined || input === null || String(input).trim() === "") {
+    return {
+      valid: false,
+      value: null,
+      message: translate("customerOrder.validation.productValueRequired", locale) || "Vui lòng nhập giá trị",
+    };
+  }
+  const clean = String(input).replace(/[$₫€£\s]/g, "").replace(",", ".").trim();
+  const val = parseFloat(clean);
+  if (Number.isNaN(val) || val < 0) {
+    return {
+      valid: false,
+      value: null,
+      message: translate("customerOrder.validation.productValueMin", locale) || "Giá trị phải là số dương lớn hơn hoặc bằng 0",
+    };
+  }
+  return { valid: true, value: val };
+}
+
+/**
+ * Hàm kiểm tra Số điện thoại dùng chung cho cả Người gửi và Người nhận.
+ * Kiểm tra định dạng số điện thoại quốc tế theo PHONE_REGEX (/^\+?[0-9]{9,15}$/).
+ * Cho phép dấu '+' tùy chọn ở đầu và từ 9 đến 15 chữ số.
+ */
+export function validatePhone(
+  phone?: string | null,
+  isRequired = false,
+  locale?: string,
+): { valid: boolean; message?: string } {
   if (!phone || phone.trim() === "") {
+    if (isRequired) {
+      return {
+        valid: false,
+        message: translate("customerOrder.validation.senderPhoneRequired", locale) || "Vui lòng nhập số điện thoại",
+      };
+    }
     return { valid: true };
   }
-  const cleanPhone = phone.trim();
-  if (cleanPhone.length > 15) {
-    return { valid: false, message: "Số điện thoại không được vượt quá 15 ký tự" };
+
+  const cleanPhone = phone.trim().replace(/[\s()-]/g, "");
+  if (!PHONE_REGEX.test(cleanPhone)) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.senderPhoneInvalid", locale) ||
+        "Số điện thoại chỉ được chứa chữ số, dấu + ở đầu và từ 9-15 ký tự",
+    };
   }
+
   return { valid: true };
 }
 
 /**
- * Validate Receiver Email: Optional, valid email format.
+ * Kiểm tra Số điện thoại người gửi (Bắt buộc nhập theo mặc định).
  */
-export function validateReceiverEmail(email?: string | null): { valid: boolean; message?: string } {
+export function validateSenderPhone(
+  phone?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  return validatePhone(phone, true, locale);
+}
+
+/**
+ * Kiểm tra Số điện thoại người nhận (Tùy chọn nhập theo mặc định).
+ */
+export function validateReceiverPhone(
+  phone?: string | null,
+  locale?: string,
+): { valid: boolean; message?: string } {
+  return validatePhone(phone, false, locale);
+}
+
+/**
+ * Kiểm tra Email người nhận: Tùy chọn nhập, đúng định dạng chuẩn RFC.
+ */
+export function validateReceiverEmail(email?: string | null, locale?: string): { valid: boolean; message?: string } {
   if (!email || email.trim() === "") {
     return { valid: true };
   }
   const cleanEmail = email.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(cleanEmail)) {
-    return { valid: false, message: "Email không đúng định dạng chuẩn (VD: example@domain.com)" };
+  if (cleanEmail.length > 254) {
+    return { valid: false, message: "Email không được vượt quá 254 ký tự" };
+  }
+  const parts = cleanEmail.split("@");
+  const localPart = parts[0] ?? "";
+  const domainPart = parts[1] ?? "";
+  if (parts.length !== 2 || localPart.length > 64 || !domainPart.includes(".")) {
+    return {
+      valid: false,
+      message:
+        translate("customerOrder.validation.receiverEmailInvalid", locale) ||
+        "Email không đúng định dạng chuẩn (VD: example@domain.com)",
+    };
   }
   return { valid: true };
+}
+
+/**
+ * Type chứa dữ liệu đầu vào phục vụ kiểm tra toàn bộ thông tin Đơn hàng lẻ.
+ */
+export interface SingleOrderValidationInput {
+  sellerOrderId?: string | null;
+  shippingMethod?: string | null;
+  senderName?: string | null;
+  senderPhone?: string | null;
+  senderAddress?: string | null;
+  senderCity?: string | null;
+  senderCountry?: string | null;
+  receiverName?: string | null;
+  receiverPhone?: string | null;
+  receiverEmail?: string | null;
+  receiverAddress1?: string | null;
+  receiverAddress2?: string | null;
+  receiverCity?: string | null;
+  receiverState?: string | null;
+  receiverCountry?: string | null;
+  receiverZipCode?: string | null;
+  detailDescription?: string | null;
+  declaredWeight?: number | string | null;
+  declaredValue?: number | string | null;
+}
+
+/**
+ * Bộ kiểm tra dữ liệu Đơn hàng lẻ hàng loạt cấp Doanh nghiệp (Enterprise Batch Validator).
+ * Sử dụng nhất quán cho Form UI, Backend TRPC API, và Quy trình Import Excel.
+ * Thực thi hiệu quả tất cả quy tắc validate và trả về bản đồ mã lỗi theo từng trường.
+ */
+export function validateSingleOrderPayload(
+  payload: SingleOrderValidationInput,
+  locale?: string,
+): { valid: boolean; errors: Record<string, string> } {
+  const errors: Record<string, string> = {};
+
+  const sellerVal = validateSellerOrderId(payload.sellerOrderId, locale);
+  if (!sellerVal.valid && sellerVal.message) errors.sellerOrderId = sellerVal.message;
+
+  const senderPhoneVal = validateSenderPhone(payload.senderPhone, locale);
+  if (!senderPhoneVal.valid && senderPhoneVal.message) errors.senderPhone = senderPhoneVal.message;
+
+  if (payload.receiverName) {
+    const nameVal = validateReceiverName(payload.receiverName, locale);
+    if (!nameVal.valid && nameVal.message) errors.receiverName = nameVal.message;
+  }
+
+  const phoneVal = validateReceiverPhone(payload.receiverPhone, locale);
+  if (!phoneVal.valid && phoneVal.message) errors.receiverPhone = phoneVal.message;
+
+  const emailVal = validateReceiverEmail(payload.receiverEmail, locale);
+  if (!emailVal.valid && emailVal.message) errors.receiverEmail = emailVal.message;
+
+  const addr1Val = validateReceiverAddress1(payload.receiverAddress1, locale);
+  if (!addr1Val.valid && addr1Val.message) errors.receiverAddress1 = addr1Val.message;
+
+  if (payload.receiverAddress2) {
+    const addr2Val = validateReceiverAddress2(payload.receiverAddress2, locale);
+    if (!addr2Val.valid && addr2Val.message) errors.receiverAddress2 = addr2Val.message;
+  }
+
+  const cityVal = validateReceiverCity(payload.receiverCity, locale);
+  if (!cityVal.valid && cityVal.message) errors.receiverCity = cityVal.message;
+
+  const stateVal = validateReceiverState(payload.receiverCountry, payload.receiverState, locale);
+  if (!stateVal.valid && stateVal.message) errors.receiverState = stateVal.message;
+
+  const zipVal = validateAndFormatPostalCode(payload.receiverCountry, payload.receiverZipCode, locale);
+  if (!zipVal.valid && zipVal.message) errors.receiverZipCode = zipVal.message;
+
+  const descVal = validateDetailDescription(payload.detailDescription, locale);
+  if (!descVal.valid && descVal.message) errors.detailDescription = descVal.message;
+
+  return {
+    valid: Object.keys(errors).length === 0,
+    errors,
+  };
 }
