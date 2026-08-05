@@ -51,6 +51,14 @@ export const Permissions = {
   CUSTOMERS_UPDATE: "customers.update",
   CUSTOMERS_DELETE: "customers.delete",
 
+  // Orders
+  ORDERS_READ: "orders.read",
+  ORDERS_CREATE: "orders.create",
+  ORDERS_UPDATE: "orders.update",
+  ORDERS_PURCHASE_LABEL: "orders.purchase_label",
+  ORDERS_VOID_LABEL: "orders.void_label",
+  ORDERS_DELETE: "orders.delete",
+
   // Customer Groups
   CUSTOMER_GROUPS_READ: "customer-groups.read",
   CUSTOMER_GROUPS_CREATE: "customer-groups.create",
@@ -485,6 +493,55 @@ export const ALL_PERMISSIONS: SystemPermission[] = [
     section: "system",
     module: "customers",
     parent: Permissions.CUSTOMERS_READ,
+  },
+
+  // Orders
+  {
+    name: Permissions.ORDERS_READ,
+    displayName: "View Orders",
+    group: "orders",
+    section: "system",
+    module: "orders",
+  },
+  {
+    name: Permissions.ORDERS_CREATE,
+    displayName: "Create Orders",
+    group: "orders",
+    section: "system",
+    module: "orders",
+    parent: Permissions.ORDERS_READ,
+  },
+  {
+    name: Permissions.ORDERS_UPDATE,
+    displayName: "Update Orders",
+    group: "orders",
+    section: "system",
+    module: "orders",
+    parent: Permissions.ORDERS_READ,
+  },
+  {
+    name: Permissions.ORDERS_PURCHASE_LABEL,
+    displayName: "Purchase Order Label",
+    group: "orders",
+    section: "system",
+    module: "orders",
+    parent: Permissions.ORDERS_READ,
+  },
+  {
+    name: Permissions.ORDERS_VOID_LABEL,
+    displayName: "Void Order Label",
+    group: "orders",
+    section: "system",
+    module: "orders",
+    parent: Permissions.ORDERS_READ,
+  },
+  {
+    name: Permissions.ORDERS_DELETE,
+    displayName: "Delete Orders",
+    group: "orders",
+    section: "system",
+    module: "orders",
+    parent: Permissions.ORDERS_READ,
   },
 
   // Customer Groups

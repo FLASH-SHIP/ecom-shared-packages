@@ -174,3 +174,12 @@ export function sanitizeUrl(input: string): string | null {
     return null;
   }
 }
+
+/**
+ * Safely serialize any object containing Prisma.Decimal or non-primitive properties
+ * into a clean, JSON-compatible object for Prisma JSON columns.
+ */
+export function toSafeJson<T>(data: T): unknown {
+  if (data === undefined || data === null) return null;
+  return JSON.parse(JSON.stringify(data));
+}

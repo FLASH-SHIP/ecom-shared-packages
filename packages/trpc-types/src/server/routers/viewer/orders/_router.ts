@@ -1,5 +1,5 @@
 import { router } from "../../../trpc";
-import { addCheckpoint, get, list, recalculate, updateStatus } from "./procedures/orders.handler";
+import { addCheckpoint, get, list, purchaseLabel, recalculate, reconcilePayment, updateStatus, voidLabel } from "./procedures/orders.handler";
 
 export const adminOrdersRouter = router({
   list,
@@ -7,6 +7,9 @@ export const adminOrdersRouter = router({
   updateStatus,
   addCheckpoint,
   recalculate,
+  purchaseLabel,
+  voidLabel,
+  reconcilePayment,
 });
 
 export type AdminOrdersRouter = typeof adminOrdersRouter;

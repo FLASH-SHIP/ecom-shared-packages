@@ -129,7 +129,7 @@ export const get = authedProcedure
     });
 
     // Cache the result
-    await orderCache.set(input.id, result as any);
+    await orderCache.set(input.id, result as CachedOrder);
 
     return result;
   });
@@ -214,4 +214,32 @@ export const recalculate = authedProcedure
     await orderCache.invalidate(input.id);
 
     return res;
+  });
+
+// 6. Purchase order label (Admin only)
+export const purchaseLabel = authedProcedure
+  .use(requirePermission(Permissions.ORDERS_PURCHASE_LABEL))
+  .input(z.object({ id: z.string().min(1) }))
+  .mutation(async () => {
+    return {} as unknown as Order;
+  });
+
+// 7. Void / Cancel order label (Admin only)
+export const voidLabel = authedProcedure
+  .use(requirePermission(Permissions.ORDERS_VOID_LABEL))
+  .input(z.object({ id: z.string().min(1) }))
+  .mutation(async () => {
+    return {} as unknown as Order;
+  });
+
+// 8. Reconcile pending label payment (Admin only)
+export const reconcilePayment = authedProcedure
+  .use(requirePermission(Permissions.ORDERS_PURCHASE_LABEL))
+  .input(z.object({ id: z.string().min(1) }))
+  .mutation(async () => {
+    return {
+      success: true,
+      feeDeducted: 0,
+      remainingBalance: 0,
+    };
   });
