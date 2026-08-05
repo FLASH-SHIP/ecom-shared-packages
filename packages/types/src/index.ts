@@ -160,18 +160,82 @@ export const TransactionType = TopupType;
 
 export type OrderStatus =
   | "DRAFT"
-  | "PENDING"
-  | "PROCESSING"
-  | "SHIPPED"
+  | "PENDING_LABEL"
+  | "LABEL_CREATED"
+  | "WAITING_FOR_PICKUP"
+  | "PICKED_UP"
+  | "RECEIVED_AT_ORIGIN_WAREHOUSE"
+  | "EXPORT_CUSTOMS_CLEARANCE"
+  | "DEPARTED_ORIGIN_COUNTRY"
+  | "INTERNATIONAL_TRANSIT"
+  | "ARRIVED_AT_DESTINATION_COUNTRY"
+  | "IMPORT_CUSTOMS_CLEARANCE"
+  | "RECEIVED_BY_LAST_MILE_CARRIER"
+  | "OUT_FOR_DELIVERY"
+  | "DELIVERED"
+  | "DELIVERY_FAILED"
+  | "CUSTOMS_HOLD"
+  | "RETURN_TO_SENDER"
+  | "RETURNED"
+  | "CANCELLED"
+  | "EXCEPTION";
+
+export type GroupOrderStatus =
+  | "LABEL_NOT_CREATED"
+  | "LABEL_CREATED"
+  | "WE_HAVE_YOUR_PACKAGE"
+  | "ON_THE_WAY"
+  | "OUT_FOR_DELIVERY"
   | "DELIVERED"
   | "CANCELLED"
-  | "RETURNED"
-  | "LABEL_CREATED"
-  | "PENDING_LABEL"
-  | "PACKAGE_RECEIVED"
-  | "ON_THE_WAY"
-  | "PICK_UP"
-  | "DELIVERY";
+  | "EXCEPTION";
+
+export function getGroupedOrderStatus(status: OrderStatus | string): GroupOrderStatus {
+  switch (status) {
+    case "DRAFT":
+    case "PENDING_LABEL":
+      return "LABEL_NOT_CREATED";
+
+    case "LABEL_CREATED":
+    case "WAITING_FOR_PICKUP":
+      return "LABEL_CREATED";
+
+    case "PICKED_UP":
+    case "RECEIVED_AT_ORIGIN_WAREHOUSE":
+      return "WE_HAVE_YOUR_PACKAGE";
+
+    case "EXPORT_CUSTOMS_CLEARANCE":
+    case "DEPARTED_ORIGIN_COUNTRY":
+    case "INTERNATIONAL_TRANSIT":
+    case "ARRIVED_AT_DESTINATION_COUNTRY":
+    case "IMPORT_CUSTOMS_CLEARANCE":
+    case "RECEIVED_BY_LAST_MILE_CARRIER":
+      return "ON_THE_WAY";
+
+    case "OUT_FOR_DELIVERY":
+      return "OUT_FOR_DELIVERY";
+
+    case "DELIVERED":
+      return "DELIVERED";
+
+    case "CANCELLED":
+      return "CANCELLED";
+
+    default:
+      return "EXCEPTION";
+  }
+}
+
+export const GROUPED_ORDER_STATUS_LABELS: Record<GroupOrderStatus, { vi: string; en: string }> = {
+  LABEL_NOT_CREATED: { vi: "Chưa tạo nhãn", en: "Label Not Created" },
+  LABEL_CREATED: { vi: "Đã tạo nhãn", en: "Label Created" },
+  WE_HAVE_YOUR_PACKAGE: { vi: "Đã nhận hàng", en: "We Have Your Package" },
+  ON_THE_WAY: { vi: "Đang vận chuyển", en: "On the Way" },
+  OUT_FOR_DELIVERY: { vi: "Đang giao hàng", en: "Out for Delivery" },
+  DELIVERED: { vi: "Đã phát thành công", en: "Delivered" },
+  CANCELLED: { vi: "Đã hủy", en: "Cancelled" },
+  EXCEPTION: { vi: "Sự cố / Ngoại lệ", en: "Exception" },
+};
 
 export type PackingBoxType = "BOX" | "BAG" | "PALLET" | "ENVELOPE";
 
