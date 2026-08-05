@@ -22,6 +22,7 @@ export { SaveIcon } from "./icon-component/SaveIcon";
 export { ServerCogIcon } from "./icon-component/ServerCogIcon";
 export { SidebarToggleIcon } from "./icon-component/SidebarToggleIcon";
 export { TelegramIcon } from "./icon-component/TelegramIcon";
+export { ZaloIcon } from "./icon-component/ZaloIcon";
 export { ThreeDotsVerticalIcon } from "./icon-component/ThreeDotsVerticalIcon";
 export { TopupIcon } from "./icon-component/TopupIcon";
 export { TrashIcon } from "./icon-component/TrashIcon";
