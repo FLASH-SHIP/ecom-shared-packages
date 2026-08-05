@@ -1,7 +1,7 @@
 import type { SVGProps } from "react";
 
 export function TelegramIcon({
-  className = "w-4 h-4 mr-2 shrink-0",
+  className = "w-4 h-4 shrink-0",
   ...props
 }: SVGProps<SVGSVGElement>) {
   return (
