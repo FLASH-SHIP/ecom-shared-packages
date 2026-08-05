@@ -1,29 +1,37 @@
-import type React from "react";
-
-const ZALO_JPG_BASE64 =
-  "data:image/jpeg;base64,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";
-
-export interface ZaloIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  className?: string;
-  width?: number;
-  height?: number;
-}
+import type { SVGProps } from "react";
 
 export function ZaloIcon({
-  className = "w-4 h-4 mr-2 shrink-0 inline-block object-contain",
-  width = 16,
-  height = 16,
-  alt = "Zalo Icon",
+  className = "w-4 h-4 mr-2 shrink-0",
   ...props
-}: ZaloIconProps) {
+}: SVGProps<SVGSVGElement>) {
   return (
-    <img
-      src={ZALO_JPG_BASE64}
-      alt={alt}
-      width={width}
-      height={height}
+    <svg
       className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
-    />
+    >
+      <title>Zalo Logo</title>
+      <rect width="24" height="24" rx="5" fill="#0068FF" />
+      <path
+        d="M5 8.5H11.5L7 15.5H13"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 11.5C14 10.1193 15.1193 9 16.5 9C17.8807 9 19 10.1193 19 11.5V13C19 14.3807 17.8807 15.5 16.5 15.5C15.1193 15.5 14 14.3807 14 13V11.5Z"
+        stroke="white"
+        strokeWidth="2"
+      />
+      <path
+        d="M20 8.5V15.5"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
