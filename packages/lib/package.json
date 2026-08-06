@@ -20,7 +20,8 @@
     "./session-cache": "./src/session-cache.ts",
     "./codeGenerator": "./src/codeGenerator.ts",
     "./addressValidator": "./src/addressValidator.ts",
-    "./diagnosticsBypass": "./src/diagnosticsBypass.ts"
+    "./diagnosticsBypass": "./src/diagnosticsBypass.ts",
+    "./media": "./src/media.ts"
   },
   "scripts": {
     "build": "tsc",
