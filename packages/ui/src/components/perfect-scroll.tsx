@@ -24,12 +24,23 @@ const PerfectScroll = forwardRef<HTMLDivElement, PerfectScrollProps>(
     useEffect(() => {
       if (!containerRef.current) return;
 
-      psRef.current = new PerfectScrollbar(containerRef.current, {
+      const element = containerRef.current;
+      psRef.current = new PerfectScrollbar(element, {
         wheelPropagation: true,
         ...options,
       });
 
+      const resizeObserver = new ResizeObserver(() => {
+        psRef.current?.update();
+      });
+
+      resizeObserver.observe(element);
+      if (element.firstElementChild) {
+        resizeObserver.observe(element.firstElementChild);
+      }
+
       return () => {
+        resizeObserver.disconnect();
         if (psRef.current) {
           psRef.current.destroy();
           psRef.current = null;
@@ -37,7 +48,7 @@ const PerfectScroll = forwardRef<HTMLDivElement, PerfectScrollProps>(
       };
     }, [options]);
 
-    // Update perfect-scrollbar when children change
+    // Update perfect-scrollbar on render
     useEffect(() => {
       psRef.current?.update();
     });
