@@ -287,6 +287,8 @@ export function isAllowedSenderCountry(country?: string | null): country is Allo
  */
 export const MAX_DECLARED_WEIGHT_GRAMS = 70000; // 70 kg
 export const MAX_DIMENSION_CM = 300; // 300 cm
+export const MAX_DECLARED_VALUE_USD = 999999;
+export const HS_CODE_REGEX = /^\d{6,10}$/;
 
 export const PARCEL_VALIDATION_MESSAGES = {
   WEIGHT_MAX: "Trọng lượng khai báo (declaredWeight) không được vượt quá 70,000 grams (70kg)",
@@ -295,6 +297,23 @@ export const PARCEL_VALIDATION_MESSAGES = {
   HEIGHT_MAX: "Chiều cao (dimensionHeight) không được vượt quá 300 cm",
   EMAIL_SENDER_INVALID: "Email người gửi (senderEmail) không đúng định dạng email",
   EMAIL_RECEIVER_INVALID: "Email người nhận (receiverEmail) không đúng định dạng email",
+  VALUE_MAX: "Giá trị sản phẩm (value) không được vượt quá 999,999 USD",
+  DECLARED_VALUE_MAX: "Giá trị khai báo (declaredValue) không được vượt quá 999,999 USD",
+  HS_CODE_REQUIRED: "Mã HS Code (hsCode) không được để trống",
+  HS_CODE_FORMAT_INVALID: "Mã HS Code (hsCode) phải gồm từ 6 đến 10 chữ số",
 } as const;
+
+/**
+ * Option mode for shipping label creation upon order creation:
+ * - GET_LABEL_LATER (0): Create order only (status PENDING_LABEL)
+ * - GET_LABEL_NOW (1): Auto-purchase freight & generate PDF shipping label immediately
+ */
+export const GET_LABEL_OPTION = {
+  GET_LABEL_LATER: 0,
+  GET_LABEL_NOW: 1,
+} as const;
+
+export type GetLabelOption = (typeof GET_LABEL_OPTION)[keyof typeof GET_LABEL_OPTION];
+
 
 

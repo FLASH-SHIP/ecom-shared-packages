@@ -1,6 +1,8 @@
 import type { ErrorCodeType } from "./errorCodes";
 import { ErrorCode } from "./errorCodes";
 
+export { ErrorCode } from "./errorCodes";
+
 /**
  * Application error with a machine-readable code.
  * Used in services and repositories (NOT in tRPC routers or NestJS controllers).
@@ -21,6 +23,10 @@ export class ErrorWithCode extends Error {
     this.code = code;
     this.statusCode = statusCode;
     this.meta = meta;
+  }
+
+  public get field(): string | undefined {
+    return typeof this.meta?.field === "string" ? this.meta.field : undefined;
   }
 
   /**
