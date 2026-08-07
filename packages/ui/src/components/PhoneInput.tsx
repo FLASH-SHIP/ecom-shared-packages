@@ -1,11 +1,11 @@
 "use client";
 
+import { Check, ChevronsUpDown, Search } from "lucide-react";
+import * as React from "react";
+import { cn } from "../lib/utils";
 import { Button } from "./button";
 import { Input } from "./input";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
-import { cn } from "../lib/utils";
-import { Check, ChevronsUpDown, Search } from "lucide-react";
-import * as React from "react";
 
 // ── Country data ──────────────────────────────────────────────────────────────
 
@@ -279,13 +279,19 @@ export function PhoneInput({
     setSelectedCountry(country);
     setOpen(false);
     setSearch("");
-    onChange?.(`${country.dial} ${number}`.trim());
+    if (!number.trim()) {
+      onChange?.("");
+    } else {
+      onChange?.(`${country.dial} ${number}`.trim());
+    }
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const n = e.target.value.replace(/[^\d\s\-().+]/g, "");
     setNumber(n);
-    if (enableCountryCode) {
+    if (!n.trim()) {
+      onChange?.("");
+    } else if (enableCountryCode) {
       onChange?.(`${selectedCountry.dial} ${n}`.trim());
     } else {
       onChange?.(n);

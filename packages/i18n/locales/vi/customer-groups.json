@@ -26,7 +26,8 @@
     "createSuccess": "Đã tạo nhóm khách hàng thành công.",
     "updateSuccess": "Đã cập nhật nhóm khách hàng thành công.",
     "deleteSuccess": "Đã xóa nhóm khách hàng thành công.",
-    "confirmDelete": "Bạn có chắc chắn muốn xóa nhóm khách hàng này?"
+    "confirmDelete": "Bạn có chắc chắn muốn xóa nhóm khách hàng này?",
+    "noDeletableGroups": "Không có nhóm khách hàng nào có thể xóa."
   },
   "assignMembers": "Gán thành viên",
   "assignModal": {

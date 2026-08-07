@@ -34,6 +34,7 @@
     "nameLabel": "Họ và tên",
     "namePlaceholder": "Ví dụ: Nguyễn Văn An",
     "phoneLabel": "Số điện thoại",
+    "phonePlaceholder": "Nhập số điện thoại",
     "passwordLabel": "Mật khẩu",
     "passwordPlaceholder": "Tối thiểu 8 ký tự",
     "confirmPasswordLabel": "Xác nhận mật khẩu",
@@ -42,6 +43,9 @@
     "dobLabel": "Ngày sinh",
     "genderLabel": "Giới tính",
     "genderPlaceholder": "Chọn giới tính",
+    "groupLabel": "Nhóm khách hàng",
+    "groupPlaceholder": "Chọn nhóm khách hàng...",
+    "noGroup": "Không phân nhóm",
     "descriptionLabel": "Ghi chú",
     "descriptionPlaceholder": "Ghi chú về khách hàng này...",
     "creating": "Đang tạo...",
@@ -65,6 +69,7 @@
     "nameMax": "Họ và tên không được vượt quá 200 ký tự",
     "emailRequired": "Vui lòng nhập email",
     "emailInvalid": "Email không hợp lệ",
+    "emailTaken": "Email này đã được sử dụng trong hệ thống",
     "passwordRequired": "Vui lòng nhập mật khẩu",
     "passwordMin": "Mật khẩu phải có ít nhất 8 ký tự",
     "passwordMax": "Mật khẩu không được vượt quá 100 ký tự",
@@ -74,6 +79,7 @@
     "phoneMax": "Số điện thoại không được vượt quá 20 ký tự",
     "usernameInvalid": "Tên đăng nhập từ 3-30 ký tự (chữ cái thường, số, '.', '_')",
     "usernameMax": "Tên đăng nhập không được vượt quá 30 ký tự",
+    "usernameTaken": "Tên đăng nhập này đã được sử dụng",
     "descriptionMax": "Ghi chú không được vượt quá 1000 ký tự"
   },
   "detail": {

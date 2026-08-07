@@ -44,6 +44,7 @@ const importOrderItemSchema = z.object({
   products: z
     .array(
       z.object({
+        excelLineNumber: z.number().optional(),
         description: z.string().min(1),
         quantity: z.number().int().positive(),
         value: z.number().positive(),

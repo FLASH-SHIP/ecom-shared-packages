@@ -34,6 +34,7 @@
     "nameLabel": "Full Name",
     "namePlaceholder": "e.g. Nguyen Van An",
     "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter phone number",
     "passwordLabel": "Password",
     "passwordPlaceholder": "Min. 8 characters",
     "confirmPasswordLabel": "Confirm Password",
@@ -42,6 +43,9 @@
     "dobLabel": "Date of Birth",
     "genderLabel": "Gender",
     "genderPlaceholder": "Select gender",
+    "groupLabel": "Customer Group",
+    "groupPlaceholder": "Select customer group...",
+    "noGroup": "No group",
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "Notes about this customer...",
     "creating": "Creating...",
@@ -65,6 +69,7 @@
     "nameMax": "Full name cannot exceed 200 characters",
     "emailRequired": "Email is required",
     "emailInvalid": "Please enter a valid email address",
+    "emailTaken": "This email address is already in use",
     "passwordRequired": "Password is required",
     "passwordMin": "Password must be at least 8 characters",
     "passwordMax": "Password cannot exceed 100 characters",
@@ -74,6 +79,7 @@
     "phoneMax": "Phone number cannot exceed 20 characters",
     "usernameInvalid": "Username must be 3-30 characters (lowercase, numbers, '.', '_')",
     "usernameMax": "Username cannot exceed 30 characters",
+    "usernameTaken": "This username is already taken",
     "descriptionMax": "Description cannot exceed 1000 characters"
   },
   "detail": {

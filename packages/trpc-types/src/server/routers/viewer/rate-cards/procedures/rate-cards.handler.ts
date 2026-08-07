@@ -115,7 +115,7 @@ export const list = authedProcedure
         name: z.string().optional(),
         startDate: z.coerce.date().optional(),
         endDate: z.coerce.date().optional(),
-        customerGroupId: z.number().int().positive().optional(),
+        customerGroupId: z.number().int().optional().nullable(),
         page: z.number().int().positive().default(1),
         perPage: z.number().int().positive().max(500).default(20),
         sortBy: z
