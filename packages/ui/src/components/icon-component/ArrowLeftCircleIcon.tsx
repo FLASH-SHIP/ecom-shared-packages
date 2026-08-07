@@ -3,6 +3,7 @@ import type { SVGProps } from "react";
 export function ArrowLeftCircleIcon({ className = "", ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+      <circle cx="10.75" cy="10.75" r="10.25" fill="#FFFFFF" />
       <path
         d="M20 10.75C20 5.64137 15.8586 1.5 10.75 1.5C5.64137 1.5 1.5 5.64137 1.5 10.75C1.5 15.8586 5.64137 20 10.75 20C15.8586 20 20 15.8586 20 10.75ZM21.5 10.75C21.5 16.6871 16.6871 21.5 10.75 21.5C4.81294 21.5 0 16.6871 0 10.75C0 4.81294 4.81294 0 10.75 0C16.6871 0 21.5 4.81294 21.5 10.75Z"
         fill="currentColor"/>
