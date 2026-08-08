@@ -4,11 +4,13 @@ import type { ApiBulkItemResult, ApiBulkResponse, ApiErrorDetail } from "./api-r
 
 export interface ExecuteBatchOptions {
   maxLimit?: number;
+  concurrency?: number;
 }
 
 /**
  * Standard batch processor utility for bulk API endpoints.
  * Validates each item schema via class-validator and executes processor callback in isolation.
+ * Supports configurable parallel concurrency pool (default: 5 items in parallel per batch).
  */
 export async function executeBatchProcess<
   TInput extends object,
@@ -20,6 +22,8 @@ export async function executeBatchProcess<
   options?: ExecuteBatchOptions,
 ): Promise<ApiBulkResponse<TOutput>> {
   const maxLimit = options?.maxLimit ?? 50;
+  const concurrency = options?.concurrency ?? 5;
+
   if (!Array.isArray(items) || items.length === 0) {
     return {
       summary: { total: 0, succeeded: 0, failed: 0 },
@@ -37,63 +41,71 @@ export async function executeBatchProcess<
   let succeeded = 0;
   let failed = 0;
 
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    if (!item) continue;
+  for (let i = 0; i < items.length; i += concurrency) {
+    const chunk = items.slice(i, i + concurrency);
+    const chunkPromises = chunk.map(async (item, chunkIndex) => {
+      const index = i + chunkIndex;
+      if (!item) return;
 
-    const dtoInstance = plainToInstance(dtoClass, item);
-    const schemaErrors = await validate(dtoInstance);
+      const dtoInstance = plainToInstance(dtoClass, item);
+      const schemaErrors = await validate(dtoInstance);
 
-    if (schemaErrors.length > 0) {
-      failed++;
-      const itemErrors: ApiErrorDetail[] = [];
-      for (const err of schemaErrors) {
-        if (err.constraints) {
-          for (const [constraintName, msg] of Object.entries(err.constraints)) {
-            const code = constraintName.replace(/([a-z])([A-Z])/g, "$1_$2").toUpperCase();
-            itemErrors.push({ code, field: err.property, message: String(msg) });
+      if (schemaErrors.length > 0) {
+        failed++;
+        const itemErrors: ApiErrorDetail[] = [];
+        for (const err of schemaErrors) {
+          if (err.constraints) {
+            for (const [constraintName, msg] of Object.entries(err.constraints)) {
+              const code = constraintName.replace(/([a-z])([A-Z])/g, "$1_$2").toUpperCase();
+              itemErrors.push({ code, field: err.property, message: String(msg) });
+            }
           }
         }
-      }
-      results.push({
-        index: i,
-        success: false,
-        errors: itemErrors,
-      });
-      continue;
-    }
-
-    try {
-      const output = await processor(item, i);
-      succeeded++;
-      results.push({
-        index: i,
-        success: true,
-        orderId: output?.id ?? output?.orderId,
-        orderCode: output?.orderCode,
-        data: output,
-      });
-    } catch (err) {
-      failed++;
-      const errorMsg = err instanceof Error ? err.message : String(err);
-      let field = "general";
-      let code = "BUSINESS_ERROR";
-
-      if (errorMsg.includes("sellerOrderId") || errorMsg.includes("Seller Order ID")) {
-        field = "sellerOrderId";
-        code = "DUPLICATE_SELLER_ORDER_ID";
-      } else if (errorMsg.includes("bảng giá") || errorMsg.includes("RateCard")) {
-        field = "shippingMethod";
-        code = "RATE_CARD_NOT_FOUND";
+        results.push({
+          index,
+          success: false,
+          errors: itemErrors,
+        });
+        return;
       }
 
-      results.push({
-        index: i,
-        success: false,
-        errors: [{ code, field, message: errorMsg }],
-      });
-    }
+      try {
+        const output = await processor(item, index);
+        succeeded++;
+        results.push({
+          index,
+          success: true,
+          orderId: output?.id ?? output?.orderId,
+          orderCode: output?.orderCode,
+          data: output,
+        });
+      } catch (err) {
+        failed++;
+        const errorMsg = err instanceof Error ? err.message : String(err);
+        let field = "general";
+        let code = "BUSINESS_ERROR";
+
+        if (errorMsg.includes("sellerOrderId") || errorMsg.includes("Seller Order ID")) {
+          field = "sellerOrderId";
+          code = "DUPLICATE_SELLER_ORDER_ID";
+        } else if (errorMsg.includes("bảng giá") || errorMsg.includes("RateCard")) {
+          field = "shippingMethod";
+          code = "RATE_CARD_NOT_FOUND";
+        }
+
+        results.push({
+          index,
+          success: false,
+          errors: [{ code, field, message: errorMsg }],
+        });
+      }
+    });
+
+    await Promise.all(chunkPromises);
   }
+
+  // Sort results by index to preserve input array order
+  results.sort((a, b) => a.index - b.index);
 
   return {
     summary: {
