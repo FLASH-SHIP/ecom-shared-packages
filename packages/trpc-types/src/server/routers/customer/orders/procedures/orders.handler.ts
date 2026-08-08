@@ -110,6 +110,22 @@ export const calculateFreight = authedProcedure
     });
   });
 
+export const getShippingLimit = authedProcedure
+  .input(
+    z.object({
+      shippingMethod: shippingMethodSchema,
+      country: z.string().min(2).max(10),
+      origin: z.string().optional().nullable(),
+    }),
+  )
+  .query(async ({ input, ctx }) => {
+    const service = getOrderService();
+    return await service.getShippingLimit({
+      ...input,
+      customerId: ctx.user.id,
+    });
+  });
+
 // 2. Create order
 export const create = authedProcedure
   .input(

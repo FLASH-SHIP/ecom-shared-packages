@@ -11,12 +11,14 @@ import {
   create,
   exportExcel,
   get,
+  getShippingLimit,
   list,
   listPackingTypes,
 } from "./procedures/orders.handler";
 
 export const customerOrdersRouter = router({
   calculateFreight,
+  getShippingLimit,
   create,
   list,
   get,
