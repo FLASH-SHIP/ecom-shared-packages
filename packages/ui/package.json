@@ -7,6 +7,7 @@
     ".": "./src/index.ts",
     "./domain": "./src/domain/index.ts",
     "./components/*": "./src/components/*.tsx",
+    "./components/icon-component/*": "./src/components/icon-component/*.tsx",
     "./lib/utils": "./src/lib/utils.ts",
     "./tokens": "./src/tokens/index.ts",
     "./tokens.json": "./src/tokens/tokens.json",

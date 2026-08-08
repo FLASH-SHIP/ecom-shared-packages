@@ -29,3 +29,5 @@ export { TrashIcon } from "./icon-component/TrashIcon";
 export { UserAvatarIcon } from "./icon-component/UserAvatarIcon";
 export { WalletSolidIcon } from "./icon-component/WalletSolidIcon";
 export { WhatsappIcon } from "./icon-component/WhatsappIcon";
+export { BellIcon } from "./icon-component/BellIcon";
+export { ArrowLeftCircleIcon } from "./icon-component/ArrowLeftCircleIcon";
