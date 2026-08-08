@@ -49,6 +49,7 @@ export * from "./components/modals/topup-confirm-modal";
 
 // Icons
 export * from "./components/icon-component/AppleIcon";
+export * from "./components/icon-component/ArrowLeftCircleIcon";
 export * from "./components/icon-component/ArrowUpDownIcon";
 export * from "./components/icon-component/ChevronLeftIcon";
 export * from "./components/icon-component/ChevronRightIcon";
